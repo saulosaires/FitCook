@@ -21,8 +21,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import aires.com.fitcook.dao.CategoryDAO;
+import aires.com.fitcook.dao.IngredientsDAO;
+import aires.com.fitcook.dao.InstructionDAO;
+import aires.com.fitcook.dao.RecipeDAO;
+import aires.com.fitcook.entity.Category;
+import aires.com.fitcook.entity.Ingredients;
+import aires.com.fitcook.entity.Instruction;
 import aires.com.fitcook.entity.Recipe;
 import aires.com.fitcook.fragment.RecipeFragment;
+import aires.com.fitcook.util.JsonUtil;
 import aires.com.fitcook.webservice.WebService;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
-        boolean firstAccess= FitCookApp.getSharedPreferencesValue(this,FitCookApp.FIRST_ACCESS,false);
+        boolean firstAccess= FitCookApp.getSharedPreferencesValue(this,FitCookApp.FIRST_ACCESS,true);
 
         if(firstAccess){
 
@@ -132,16 +140,37 @@ public class MainActivity extends AppCompatActivity {
 
                         if(status.equals("success")){
 
+                            FitCookApp.putSharedPreferencesValue(getApplicationContext(),FitCookApp.TIME_RETRIEVE_ALL,response.getLong("time"));
+
                             JSONArray arrayRecipe = new JSONArray(response.getString("array"));
 
-                            List<Recipe> listRecipe= new ArrayList<Recipe>();
-
-                            for(int i=0;i<arrayRecipe.length();i++){
-
-                                listRecipe.add(new Gson().fromJson(arrayRecipe.getJSONObject(i).toString(), Recipe.class) );
-                            }
+                            List<Recipe> listRecipe= JsonUtil.parseRecipe(arrayRecipe);
 
                             if (listRecipe.size() > 0) {
+
+                                RecipeDAO recipeDAO=new RecipeDAO(getApplicationContext());
+                                CategoryDAO categoryDAO=new CategoryDAO(getApplicationContext());
+                                IngredientsDAO ingredientsDAO=new IngredientsDAO(getApplicationContext());
+                                InstructionDAO instructionDAO=new InstructionDAO(getApplicationContext());
+
+                                for(Recipe recipe:listRecipe) {
+                                    recipeDAO.create(recipe);
+
+
+                                    for (Category cat :recipe.getCategories()) {
+                                        categoryDAO.create(cat);
+                                    }
+
+                                    for (Instruction i :recipe.getInstructionList()) {
+                                        instructionDAO.create(i);
+                                    }
+
+                                    for (Ingredients i :recipe.getIngredientsList()) {
+                                        ingredientsDAO.create(i);
+                                    }
+
+                                }
+
 
                                 FitCookApp app = (FitCookApp) getApplication();
 
