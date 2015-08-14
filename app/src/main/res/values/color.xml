@@ -1,0 +1,9 @@
+<resources>
+
+    <color name="primary_100">#C8E6C9</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#43A047</color>
+    <color name="colorAccent">#F44336</color>
+    <color name="lightGrey">#BDBDBD</color>
+    <color name="window_background">#FFF5F5F5</color>
+</resources>
