@@ -1,6 +1,8 @@
 package aires.com.fitcook.webservice;
 
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -12,10 +14,10 @@ public class WebService {
 
      public static final String url="http://fitcook-pingy.rhcloud.com/fitcook/service/";
 
-     public static final String retrieve="recipe/retrieve";
+     public static final String retrieve="recipe/retrieveAll";
 
 
-     public static void retrieveRecipes(final CallBack callBack){
+     public static void retrieveRecipes(long time,final CallBack callBack){
 
          if(callBack==null) {
              throw new IllegalArgumentException("callBack cant be null");
@@ -23,7 +25,9 @@ public class WebService {
 
          StringBuilder mUrl = new StringBuilder(url);
 
-         mUrl.append(retrieve);
+         mUrl.append(retrieve).append("?time=").append(time);
+
+         Log.v("WebService",mUrl.toString());
 
          JsonObjectRequest jsonObjectRequest =
                  new JsonObjectRequest(Request.Method.GET, mUrl.toString(), new Response.Listener<JSONObject>()

@@ -10,15 +10,20 @@ import com.android.volley.toolbox.Volley;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import aires.com.fitcook.entity.Category;
 import aires.com.fitcook.entity.Recipe;
 import aires.com.fitcook.webservice.OkHttpStack;
 
 
 public class FitCookApp extends Application {
 
-    private List<Recipe> listRecipe;
+    public static final String CONTENT_AUTHORITY = "aires.com.fitcook";
+
+    public static HashMap<Integer,Category> mapCategory = new HashMap<Integer,Category>();
+
 
     private static FitCookApp mInstance;
     private RequestQueue mRequestQueue;
@@ -31,16 +36,21 @@ public class FitCookApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         mInstance = this;
-    }
 
-    public void setRecipeList(List<Recipe> listRecipe){
-        this.listRecipe=listRecipe;
-    }
 
-    public List<Recipe> getRecipeList(){
-        return listRecipe;
+        mapCategory.put(R.id.category_drink, new Category(R.id.category_drink, R.drawable.drink_big, 0, "Bebidas"));
+        mapCategory.put(R.id.category_cake,  new Category(R.id.category_cake,  R.drawable.cake_big,  1, "Bolos e Tortas"));
+        mapCategory.put(R.id.category_meat,  new Category(R.id.category_meat,  R.drawable.meat_big,  2, "Carnes e Aves"));
+        mapCategory.put(R.id.category_candy, new Category(R.id.category_candy, R.drawable.candy_big, 3, "Doces e Sobremesas"));
+        mapCategory.put(R.id.category_snacks,new Category(R.id.category_snacks,R.drawable.snacks_big,4, "Lanches"));
+        mapCategory.put(R.id.category_pasta, new Category(R.id.category_pasta, R.drawable.pasta_big, 5, "Massa"));
+        mapCategory.put(R.id.category_bread, new Category(R.id.category_bread, R.drawable.bread_big, 6, "Pães"));
+        mapCategory.put(R.id.category_fish,  new Category(R.id.category_fish,  R.drawable.fish_big,  7, "Peixe o frutos do Mar"));
+        mapCategory.put(R.id.category_salad, new Category(R.id.category_salad, R.drawable.salad_big, 8, "Saladas e Molhos"));
+        mapCategory.put(R.id.category_soup,  new Category(R.id.category_soup,  R.drawable.soup_big,  9, "Sopa"));
+        mapCategory.put(R.id.category_juice, new Category(R.id.category_juice, R.drawable.juice_big, 10,"Sucos"));
+
     }
 
     public RequestQueue getVolleyRequestQueue()
@@ -71,7 +81,7 @@ public class FitCookApp extends Application {
         }
     }
 
-    public static String FIRST_ACCESS="FIRST_ACCESS";
+    public static String TIME="TIME";
 
     public static Boolean getSharedPreferencesValue(Context context,String name,boolean defValue){
 
@@ -94,7 +104,26 @@ public class FitCookApp extends Application {
 
     }
 
+    public static Long getSharedPreferencesValue(Context context,String name,long defValue){
 
+        if(context!=null)
+            return  PreferenceManager.getDefaultSharedPreferences(context).getLong(name, defValue);
+        else
+            return null;
+
+    }
+
+    public static boolean putSharedPreferencesValue(Context context,String key,long value){
+
+        if(context==null) return false;
+
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(key, value)
+                .commit();
+
+
+    }
 
 
 }

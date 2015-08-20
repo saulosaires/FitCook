@@ -27,22 +27,20 @@
             android:icon="@drawable/ic_favorite_black_48dp"
             android:title="@string/fav" />
 
-
-    </group>
-
-    <item android:title="@string/category">
-        <menu>
-
-            <item  android:title="@string/category_coffe"     android:id="@+id/category_coffe"/>
-            <item  android:title="@string/category_soap"      android:id="@+id/category_soap"/>
-            <item  android:title="@string/category_main_meal" android:id="@+id/category_main_meal"/>
-            <item  android:title="@string/category_lunch"     android:id="@+id/category_lunch"/>
-            <item  android:title="@string/category_salad"     android:id="@+id/category_salad"/>
-            <item  android:title="@string/category_dessert"   android:id="@+id/category_dessert"/>
-            <item  android:title="@string/category_drinks"    android:id="@+id/category_drinks"/>
-            <item  android:title="@string/category_vegan"     android:id="@+id/category_vegan"/>
-
-        </menu>
-    </item>
-
+        <item android:title="@string/category" android:id="@+id/category" >
+            <menu>
+                <item  android:title="@string/category_drink" android:id="@+id/category_drink" android:icon="@drawable/drink" android:checkable="true"/>
+                <item  android:title="@string/category_cake"  android:id="@+id/category_cake" android:icon="@drawable/cake" android:checkable="true"/>
+                <item  android:title="@string/category_meat"  android:id="@+id/category_meat" android:icon="@drawable/meat"  android:checkable="true"/>
+                <item  android:title="@string/category_candy" android:id="@+id/category_candy" android:icon="@drawable/candy"  android:checkable="true"/>
+                <item  android:title="@string/category_snack" android:id="@+id/category_snacks" android:icon="@drawable/snacks"  android:checkable="true"/>
+                <item  android:title="@string/category_pasta" android:id="@+id/category_pasta" android:icon="@drawable/pasta"  android:checkable="true"/>
+                <item  android:title="@string/category_bread" android:id="@+id/category_bread" android:icon="@drawable/bread"  android:checkable="true"/>
+                <item  android:title="@string/category_fish"  android:id="@+id/category_fish" android:icon="@drawable/fish"  android:checkable="true"/>
+                <item  android:title="@string/category_salad" android:id="@+id/category_salad" android:icon="@drawable/salad"  android:checkable="true"/>
+                <item  android:title="@string/category_soup"  android:id="@+id/category_soup" android:icon="@drawable/soup" android:checkable="true"/>
+                <item  android:title="@string/category_juice" android:id="@+id/category_juice" android:icon="@drawable/juice"  android:checkable="true"/>
+            </menu>
+        </item>
+</group>
 </menu>

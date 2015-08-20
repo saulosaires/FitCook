@@ -1,11 +1,11 @@
 package aires.com.fitcook.entity;
 
 import android.content.ContentValues;
-
 import java.util.List;
-import java.util.Set;
 
+import aires.com.fitcook.FitCookApp;
 import aires.com.fitcook.dao.DatabaseHelper;
+import aires.com.fitcook.util.BitWiseUtil;
 
 public class Recipe  extends Entity{
 
@@ -16,22 +16,21 @@ public class Recipe  extends Entity{
     private String timeToPrepare;
     private String servings;
     private Boolean favorite;
-
-    private Set<Category> categories;
-
-    private List<Ingredients> ingredientsList;
-    private List<Instruction> instructionList;
+    private int category;
+    private String ingredients;
+    private String instruction;
+    private Boolean ativo;
 
     public Recipe(String publicId,
-                  String name,
-                  String url,
-                  String description,
-                  String timeToPrepare,
-                  String servings,
-                  Boolean favorite,
-                  Set<Category> categories,
-                  List<Ingredients> ingredientsList,
-                  List<Instruction> instructionList) {
+                       String name,
+                       String url,
+                       String description,
+                       String timeToPrepare,
+                       String servings,
+                       Boolean favorite,
+                       int category,
+                       String ingredients,
+                       String instruction) {
 
         this.publicId = publicId;
         this.name = name;
@@ -40,10 +39,44 @@ public class Recipe  extends Entity{
         this.timeToPrepare = timeToPrepare;
         this.servings = servings;
         this.favorite = favorite;
-        this.categories = categories;
-        this.ingredientsList=ingredientsList;
-        this.instructionList=instructionList;
+        this.category=category;
+        this.ingredients=ingredients;
+        this.instruction=instruction;
 
+    }
+
+    public Recipe(String publicId,
+                  String name,
+                  String url,
+                  String description,
+                  String timeToPrepare,
+                  String servings,
+                  Boolean favorite,
+                  int category,
+                  String ingredients,
+                  String instruction,
+                  Boolean ativo) {
+
+        this.publicId = publicId;
+        this.name = name;
+        this.url = url;
+        this.description = description;
+        this.timeToPrepare = timeToPrepare;
+        this.servings = servings;
+        this.favorite = favorite;
+        this.category=category;
+        this.ingredients=ingredients;
+        this.instruction=instruction;
+        this.ativo=ativo;
+
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
     }
 
     public String getPublicId() {
@@ -102,28 +135,28 @@ public class Recipe  extends Entity{
         this.favorite = favorite;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public String getIngredients() {
+        return ingredients;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
     }
 
-    public List<Ingredients> getIngredientsList() {
-        return ingredientsList;
+    public String getInstruction() {
+        return instruction;
     }
 
-    public void setIngredientsList(List<Ingredients> ingredientsList) {
-        this.ingredientsList = ingredientsList;
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
     }
 
-    public List<Instruction> getInstructionList() {
-        return instructionList;
+    public Boolean getAtivo() {
+        return ativo;
     }
 
-    public void setInstructionList(List<Instruction> instructionList) {
-        this.instructionList = instructionList;
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public ContentValues toContentValues(){
@@ -136,7 +169,10 @@ public class Recipe  extends Entity{
         values.put(DatabaseHelper.KEY_RECIPE_DESCRIPTION,description);
         values.put(DatabaseHelper.KEY_RECIPE_TIME_TO_PREPARE,timeToPrepare);
         values.put(DatabaseHelper.KEY_RECIPE_SERVINGS, servings);
+        values.put(DatabaseHelper.KEY_RECIPE_INST, instruction);
+        values.put(DatabaseHelper.KEY_RECIPE_INGR, ingredients);
         values.put(DatabaseHelper.KEY_RECIPE_FAV, favorite?1:0);
+        values.put(DatabaseHelper.KEY_RECIPE_CAT, category);
 
         return values;
 

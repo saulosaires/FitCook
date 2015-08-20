@@ -4,22 +4,34 @@ import android.content.ContentValues;
 
 import aires.com.fitcook.dao.DatabaseHelper;
 
-public class Category extends Entity{
+public class Category {
 
-    private String publicId;
+    private int id;
+    private int bitPosition;
     private String description;
+    private int icon;
 
-    public Category(String publicId, String description) {
-        this.publicId = publicId;
+    public Category(int id,int icon,int bitPosition,String description) {
+        this.id=id;
+        this.icon=icon;
+        this.bitPosition=bitPosition;
         this.description = description;
     }
 
-    public String getPublicId() {
-        return publicId;
+    public int getBitPosition() {
+        return bitPosition;
     }
 
-    public void setPublicId(String publicId) {
-        this.publicId = publicId;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setBitPosition(int bitPosition) {
+        this.bitPosition = bitPosition;
     }
 
     public String getDescription() {
@@ -30,15 +42,11 @@ public class Category extends Entity{
         this.description = description;
     }
 
+    public int getIcon() {
+        return icon;
+    }
 
-    public ContentValues toContentValues(){
-
-        ContentValues values = new ContentValues();
-
-        values.put(DatabaseHelper.KEY_CATEGORY_PUBLICID,publicId);
-        values.put(DatabaseHelper.KEY_CATEGORY_DESCRIPTION,description);
-
-        return values;
-
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 }

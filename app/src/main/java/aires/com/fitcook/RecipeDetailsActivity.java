@@ -3,6 +3,7 @@ package aires.com.fitcook;
 import android.content.Intent;
 
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,13 +17,19 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import aires.com.fitcook.entity.Ingredients;
-import aires.com.fitcook.entity.Instruction;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.List;
+
+import aires.com.fitcook.dao.RecipeDAO;
 import aires.com.fitcook.entity.Recipe;
+import aires.com.fitcook.util.JsonUtil;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_RECIPE_INDEX = "EXTRA_RECIPE_INDEX";
+    public static final String EXTRA_RECIPE_ID = "EXTRA_RECIPE_ID";
+    RecipeDAO recipeDAO;
 
     Recipe recipe;
 
@@ -31,13 +38,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
 
+        recipeDAO= new RecipeDAO(getApplicationContext());
 
         Intent intent = getIntent();
-        final int id = intent.getIntExtra(EXTRA_RECIPE_INDEX, -1);
+        final String id = intent.getStringExtra(EXTRA_RECIPE_ID);
 
-        FitCookApp app = (FitCookApp) getApplication();
-
-        recipe= app.getRecipeList().get(id);
+        recipe= recipeDAO.read(id);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,17 +51,46 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(recipe.getName());
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.expandedappbar);
 
         loadBackdrop();
 
         init();
+
 
     }
 
 
     private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        Picasso.with(this).load(recipe.getFile().getUrl()).into(imageView);
+        Picasso.with(this).load(recipe.getUrl()).into(imageView);
+
+        final FloatingActionButton fab =(FloatingActionButton)findViewById(R.id.fab);
+
+        if(recipe.getFavorite()){
+            fab.setImageResource(R.drawable.ic_favorite_white_48dp);
+        }else{
+            fab.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+        }
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(recipe.getFavorite()){
+                    fab.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+                }else{
+                    fab.setImageResource(R.drawable.ic_favorite_white_48dp);
+
+                }
+
+                recipe.setFavorite(!recipe.getFavorite());
+
+                recipeDAO.update(recipe);
+
+            }
+        });
+
     }
 
     private void init(){
@@ -82,15 +117,22 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private void initIngredients(){
 
-        LinearLayout containerIngredients =(LinearLayout)findViewById(R.id.containerIngredients);
+        try {
+            List< String > ingredientsList = JsonUtil.parseList(new JSONArray(recipe.getIngredients()));
 
-        for(Ingredients ingredients: recipe.getIngredientsList()){
+            LinearLayout containerIngredients =(LinearLayout)findViewById(R.id.containerIngredients);
 
-            CheckBox checkBox =new CheckBox(this);
-            checkBox.setText(ingredients.getDescription());
+            for(String ingredients: ingredientsList){
 
-            containerIngredients.addView(checkBox);
+                CheckBox checkBox =new CheckBox(this);
+                checkBox.setText(ingredients);
 
+                containerIngredients.addView(checkBox);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
     }
@@ -98,19 +140,28 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     public void initInstructions(){
 
 
-        LinearLayout containerInstructions =(LinearLayout)findViewById(R.id.containerInstructions);
+        try {
 
-        for(Instruction instruction: recipe.getInstructionList()){
+            List< String > instructionList = JsonUtil.parseList(new JSONArray(recipe.getInstruction()));
 
-            TextView textView =new TextView(this);
-            textView.setText(instruction.getBasis()+"-"+instruction.getDescription());
-            textView.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Small);
-            textView.setPadding(4,4,4,4);
+            LinearLayout containerInstructions =(LinearLayout)findViewById(R.id.containerInstructions);
 
-            containerInstructions.addView(textView);
+            int index=1;
 
+            for(String instruction: instructionList){
+
+                TextView textView =new TextView(this);
+                textView.setText(index+"-"+instruction);
+                textView.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Small);
+                textView.setPadding(4,4,4,4);
+
+                containerInstructions.addView(textView);
+                index++;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
 
     }
 

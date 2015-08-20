@@ -45,10 +45,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final Recipe recipe = listRecipe.get(i);
-        final int index= i;
+
 
         viewHolder.title.setText(recipe.getName());
-        Picasso.with(viewHolder.context).load(recipe.getFile().getUrl()).into(viewHolder.cover);
+        Picasso.with(viewHolder.context).load(recipe.getUrl()).into(viewHolder.cover);
 
         viewHolder.title.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +57,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
                 Context context = v.getContext();
                 Intent intent = new Intent(context, RecipeDetailsActivity.class);
-                intent.putExtra(RecipeDetailsActivity.EXTRA_RECIPE_INDEX, index);
+                intent.putExtra(RecipeDetailsActivity.EXTRA_RECIPE_ID, recipe.getPublicId());
 
                 context.startActivity(intent);
 
@@ -69,7 +69,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
                 Context context = v.getContext();
                 Intent intent = new Intent(context, RecipeDetailsActivity.class);
-                intent.putExtra(RecipeDetailsActivity.EXTRA_RECIPE_INDEX, index);
+                intent.putExtra(RecipeDetailsActivity.EXTRA_RECIPE_ID, recipe.getPublicId());
 
                 context.startActivity(intent);
 
