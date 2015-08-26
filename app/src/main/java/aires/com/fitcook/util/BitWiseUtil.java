@@ -20,7 +20,7 @@ public class BitWiseUtil {
 
                 int bitPos = FitCookApp.mapCategory.get(cat.getId()).getBitPosition();
 
-                category = BitWiseUtil.set(bitPos, category);
+                category = set(bitPos, category);
 
             }
         }

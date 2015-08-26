@@ -1,8 +1,11 @@
 package aires.com.fitcook;
 
+
 import android.content.Intent;
 
+
 import android.support.design.widget.CollapsingToolbarLayout;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.List;
+
 
 import aires.com.fitcook.dao.RecipeDAO;
 import aires.com.fitcook.entity.Recipe;
@@ -62,6 +66,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
 
     private void loadBackdrop() {
+
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         Picasso.with(this).load(recipe.getUrl()).into(imageView);
 
@@ -77,9 +82,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(recipe.getFavorite()){
+                if (recipe.getFavorite()) {
                     fab.setImageResource(R.drawable.ic_favorite_border_white_48dp);
-                }else{
+                } else {
                     fab.setImageResource(R.drawable.ic_favorite_white_48dp);
 
                 }
@@ -126,7 +131,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
                 CheckBox checkBox =new CheckBox(this);
                 checkBox.setText(ingredients);
-
+                checkBox.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+                checkBox.setPadding(8,8,8,8);
                 containerIngredients.addView(checkBox);
 
             }
@@ -150,12 +156,28 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
             for(String instruction: instructionList){
 
-                TextView textView =new TextView(this);
-                textView.setText(index+"-"+instruction);
-                textView.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Small);
-                textView.setPadding(4,4,4,4);
+                LinearLayout linearLayout = new LinearLayout(this);
+                linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+                linearLayout.setPadding(8,8,8,8);
+                LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
 
-                containerInstructions.addView(textView);
+                linearLayout.setLayoutParams(LLParams);
+
+                TextView ind =new TextView(this);
+                ind.setText( index+"");
+                ind.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Large);
+                ind.setPadding(4, 4, 4, 4);
+                ind.setTextColor(getResources().getColor(R.color.colorAccent));
+
+                TextView inst =new TextView(this);
+                inst.setText( instruction);
+                inst.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+                inst.setPadding(4, 4, 4, 4);
+
+                linearLayout.addView(ind);
+                linearLayout.addView(inst);
+
+                containerInstructions.addView(linearLayout);
                 index++;
             }
 
@@ -165,6 +187,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     }
 
+    public void share(){
+
+
+
+    }
+
+
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -178,10 +208,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_share) {
+            share();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+*/
+
 }

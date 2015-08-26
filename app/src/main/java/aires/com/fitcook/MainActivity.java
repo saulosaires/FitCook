@@ -93,12 +93,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpActionBar(){
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       // setSupportActionBar(toolbar);
 
-        final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getSupportActionBar();
+        if(actionBar!=null) {
+
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
 
     }
 
@@ -155,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.container, EmptyFragment.newInstance(R.drawable.icone,getResources().getString(R.string.empty_recipes)))
-                    .commit();
+                    .commitAllowingStateLoss();
 
         }else{
 
@@ -176,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         if(listRecipe==null  || listRecipe.size()==0){
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.container, EmptyFragment.newInstance(null,getResources().getString(R.string.empty_fav)))
+            fragmentManager.beginTransaction().replace(R.id.container, EmptyFragment.newInstance(R.drawable.icone,getResources().getString(R.string.empty_fav)))
                     .commit();
 
         }else{

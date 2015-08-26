@@ -11,7 +11,7 @@
     <string name="fav">Favoritos</string>
     <string name="all_recipes">Receitas</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_share">Compartilhar</string>
     <string name="title_activity_recipe_details">RecipeDetailsActivity</string>
 
     <string name="first_access_title">Aguarde</string>
@@ -31,11 +31,11 @@
     <string name="category_meat">Carnes e Aves</string>
     <string name="category_candy">Doces e Sobremesas</string>
     <string name="category_snack">Lanches</string>
-    <string name="category_pasta">Massa</string>
+    <string name="category_pasta">Massas</string>
     <string name="category_bread">Pães</string>
-    <string name="category_fish">Peixe o frutos do Mar</string>
+    <string name="category_fish">Peixes e Frutos do Mar</string>
     <string name="category_salad">Saladas e Molhos</string>
-    <string name="category_soup">Sopa</string>
+    <string name="category_soup">Sopas</string>
     <string name="category_juice">Sucos</string>
 
     <string name="empty_category">Sem receitas :(</string>

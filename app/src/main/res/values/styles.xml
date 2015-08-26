@@ -17,6 +17,16 @@
 
 <resources>
 
+
+    <style name="Theme.DesignMain" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
+
+
+
     <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
     </style>
 
@@ -37,12 +47,11 @@
 
 
     <style name="expandedappbar">
-
+        <item name="android:textSize">18dp</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:shadowColor">@color/colorAccent</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">0</item>
-        <item name="android:shadowRadius">25</item>
+        <item name="android:shadowColor">@android:color/black</item>
+
+        <item name="android:shadowRadius">5</item>
 
     </style>
 </resources>
