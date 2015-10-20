@@ -20,6 +20,7 @@ public class Recipe  extends Entity{
     private String ingredients;
     private String instruction;
     private Boolean ativo;
+    private Boolean novo;
 
     public Recipe(String publicId,
                        String name,
@@ -55,7 +56,8 @@ public class Recipe  extends Entity{
                   int category,
                   String ingredients,
                   String instruction,
-                  Boolean ativo) {
+                  Boolean ativo,
+                  Boolean novo) {
 
         this.publicId = publicId;
         this.name = name;
@@ -68,6 +70,7 @@ public class Recipe  extends Entity{
         this.ingredients=ingredients;
         this.instruction=instruction;
         this.ativo=ativo;
+        this.novo=novo;
 
     }
 
@@ -159,6 +162,14 @@ public class Recipe  extends Entity{
         this.ativo = ativo;
     }
 
+    public Boolean getNovo() {
+        return novo;
+    }
+
+    public void setNovo(Boolean novo) {
+        this.novo = novo;
+    }
+
     public ContentValues toContentValues(){
 
         ContentValues values = new ContentValues();
@@ -173,6 +184,7 @@ public class Recipe  extends Entity{
         values.put(DatabaseHelper.KEY_RECIPE_INGR, ingredients);
         values.put(DatabaseHelper.KEY_RECIPE_FAV, favorite?1:0);
         values.put(DatabaseHelper.KEY_RECIPE_CAT, category);
+        values.put(DatabaseHelper.KEY_RECIPE_NEW, novo?1:0);
 
         return values;
 

@@ -34,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_RECIPE_CAT = "category";
     public static final String KEY_RECIPE_INST = "instruction";
     public static final String KEY_RECIPE_INGR = "ingredient";
+    public static final String KEY_RECIPE_NEW    = "new";
 
     private static final String CREATE_TABLE_RECIPE = "CREATE TABLE "+ TABLE_RECIPE+"("+
             KEY_RECIPE_PUBLICID+" VARCHAR(100),  "+
@@ -45,7 +46,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_RECIPE_INST+" VARCHAR(4000),"+
             KEY_RECIPE_INGR+" VARCHAR(4000),"+
             KEY_RECIPE_CAT+" INTEGER,"+
+            KEY_RECIPE_NEW + " INTEGER,"+
             KEY_RECIPE_FAV+" INTEGER)";
+
+
+
+    private static final String DATABASE_ALTER_TABLE_RECIPE = "ALTER TABLE "
+            + TABLE_RECIPE + " ADD COLUMN " + KEY_RECIPE_NEW + " INTEGER;";
 
 
     public DatabaseHelper(Context context) {
@@ -65,7 +72,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
   }
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
- 
+      if (oldVersion < 2) {
+          db.execSQL(DATABASE_ALTER_TABLE_RECIPE);
+      }
   	
   }  
   

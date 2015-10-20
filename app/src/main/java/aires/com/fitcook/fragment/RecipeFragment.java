@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +24,8 @@ import aires.com.fitcook.entity.Recipe;
 
 
 public class RecipeFragment extends Fragment {
+
+    private static final String BUNDLE_RECYCLER_LAYOUT = "recycler.layout";
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
@@ -55,14 +58,14 @@ public class RecipeFragment extends Fragment {
         if (getArguments() != null) {
 
         }
-        setRetainInstance(true);
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-
+        setRetainInstance(true);
         return inflater.inflate(R.layout.fragment_recipe, container, false);
 
 
@@ -121,6 +124,5 @@ public class RecipeFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
 
 }

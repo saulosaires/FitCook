@@ -1,5 +1,6 @@
 package aires.com.fitcook.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -139,7 +140,7 @@ public class RecipeDAO {
 
 		SQLiteDatabase db = helper.getDatabase();
 
-		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE;
+		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE+" order by "+DatabaseHelper.KEY_RECIPE_NEW+" DESC";
 
 		Cursor c = db.rawQuery(selectQuery,  new String[] {});
 
@@ -215,6 +216,22 @@ public class RecipeDAO {
 		c.close();
 
 		return listRecipe;
+	}
+
+	public boolean setNew(Boolean novo){
+
+		SQLiteDatabase db = helper.getDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(DatabaseHelper.KEY_RECIPE_NEW, novo?1:0);
+
+		long rows = db.update(DatabaseHelper.TABLE_RECIPE,values,null,null);
+
+		if(rows==0)
+			return false;
+		else
+			return true;
+
 	}
 
 }

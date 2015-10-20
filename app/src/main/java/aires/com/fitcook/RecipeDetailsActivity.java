@@ -189,12 +189,44 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     public void share(){
 
+        try{
 
+            StringBuilder shared= new StringBuilder("");
+
+            shared.append(recipe.getName()).append("\n\n");
+
+            shared.append(recipe.getDescription()).append("\n\n");
+
+            List< String > ingredientsList = JsonUtil.parseList(new JSONArray(recipe.getIngredients()));
+            shared.append("Ingredientes").append("\n\n");
+            for(String ingredients: ingredientsList){
+                shared.append(ingredients).append("\n");
+            }
+            shared.append("\n");
+            List< String > instructionList = JsonUtil.parseList(new JSONArray(recipe.getInstruction()));
+            shared.append("Preparo").append("\n\n");
+            int index=1;
+            for(String instruction: instructionList){
+                shared.append(index).append("-").append(instruction).append("\n");
+                index++;
+            }
+
+
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shared.toString());
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+         } catch (JSONException e) {
+            e.printStackTrace();
+         }
 
     }
 
 
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -215,6 +247,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-*/
+
 
 }

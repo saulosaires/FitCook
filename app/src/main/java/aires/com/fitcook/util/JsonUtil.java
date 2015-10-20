@@ -42,7 +42,7 @@ public class JsonUtil {
                                          category,
                                          ingredients,
                                          instruction,
-                                         ativo);
+                                         ativo,true);
 
             listRecipe.add(recipe);
         }

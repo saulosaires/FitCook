@@ -100,6 +100,7 @@ public class SyncUtils {
                             if (listRecipe.size() > 0) {
 
                                 RecipeDAO recipeDAO=new RecipeDAO(context);
+                                recipeDAO.setNew(false);
 
                                 for(Recipe recipe:listRecipe) {
 
