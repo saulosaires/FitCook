@@ -1,0 +1,32 @@
+JvmtiExport can_access_local_variables 0
+JvmtiExport can_hotswap_or_post_breakpoint 0
+JvmtiExport can_post_on_exceptions 0
+# 198 ciObject found
+ciMethod java/lang/Object <init> ()V 4097 1 106579 0 0
+ciMethod java/lang/Object getClass ()Ljava/lang/Class; 2049 1 256 0 -1
+ciMethod java/lang/System arraycopy (Ljava/lang/Object;ILjava/lang/Object;II)V 5121 1 640 0 -1
+ciMethod java/lang/Math max (II)I 217 1 5241 0 -1
+ciMethod java/lang/Math min (II)I 3073 1 24786 0 -1
+ciMethod java/util/ArrayList ensureCapacity (I)V 4097 1 3551 0 0
+ciMethod java/util/ArrayList ensureCapacityInternal (I)V 641 1 18224 0 -1
+ciMethod java/util/ArrayList ensureExplicitCapacity (I)V 641 1 20158 0 576
+ciMethod java/util/ArrayList grow (I)V 89 1 3689 0 0
+ciMethod java/util/ArrayList hugeCapacity (I)I 0 0 1 0 0
+ciMethod java/util/ArrayList size ()I 1209 1 151 0 0
+ciMethod java/util/ArrayList elementData (I)Ljava/lang/Object; 2081 1 89904 0 96
+ciMethod java/util/ArrayList get (I)Ljava/lang/Object; 2081 1 82579 0 128
+ciMethod java/util/ArrayList add (Ljava/lang/Object;)Z 641 1 18013 0 736
+ciMethod java/util/ArrayList rangeCheck (I)V 2081 1 89840 0 64
+ciMethod java/util/Arrays copyOf ([Ljava/lang/Object;I)[Ljava/lang/Object; 2121 1 8329 0 0
+ciMethod java/util/Arrays copyOf ([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object; 2057 1 5377 0 -1
+ciMethod java/util/Arrays copyOf ([JI)[J 41 1 7 0 0
+ciMethod java/lang/Enum ordinal ()I 7049 1 881 0 0
+ciMethodData java/lang/Object <init> ()V 2 106579 orig 144 152 11 186 96 0 0 0 0 136 4 27 20 0 0 0 0 168 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 153 242 12 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 3 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 data 0 oops 0
+ciMethod java/util/BitSet wordIndex (I)I 2049 1 28148 0 0
+ciMethod java/util/BitSet checkInvariants ()V 2073 1 10306 0 32
+ciMethod java/util/BitSet ensureCapacity (I)V 81 1 2895 0 0
+ciMethod java/util/BitSet expandTo (I)V 2049 1 5567 0 160
+ciMethod java/util/BitSet set (I)V 1633 1 5324 0 320
+ciMethod java/util/BitSet get (I)Z 1617 1 5322 0 160
+ciMethod java/util/BitSet or (Ljava/util/BitSet;)V 4097 2769 3709 0 0
+ciMethodData java/util/ArrayList add (Ljava/lang/Object;)Z 2 18531 orig 144 152 11 186 96 0 0 0 0 208 253 40 20 0 0 0 0 240 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 80 0 0 0 153 64 2 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 15 0 4 0 1 0 64 0 0 0 255 255 255 255 0 0 0 0 2 0 7 0 0 0 0 0 data 8 0x70002 0x4818 0x1a0104 0x0 0x166c5750 0x327 0x166c5800 0xc oops 2
