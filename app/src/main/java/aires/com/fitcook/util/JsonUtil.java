@@ -21,16 +21,21 @@ public class JsonUtil {
 
             JSONObject obj =arrayRecipe.getJSONObject(i);
 
-            String publicId      =obj.getString("publicId");
-            String name          =obj.getString("name");
-            String url           =obj.getJSONObject("file").getString("url");
-            String description   =obj.getString("description");
-            String timeToPrepare =obj.getString("timeToPrepare");
-            String servings      =obj.getString("servings");
-            int category         =obj.getInt("category");
-            String  ingredients  =obj.getString("ingredients");
-            String  instruction  =obj.getString("instructions");
             Boolean ativo        =obj.getBoolean("ativo");
+            String publicId      =obj.getString("_id");
+
+            JSONObject objRecipe =obj.getJSONObject("recipe");
+
+            String name          =objRecipe.getString("name");
+            String url           =objRecipe.getJSONObject("file").getString("url");
+
+            String description   =objRecipe.getString("description");
+            String timeToPrepare =objRecipe.getString("timeToPrepare");
+            String servings      =objRecipe.getString("servings");
+            int category         =objRecipe.getInt("category");
+            String  ingredients  =objRecipe.getString("ingredient");
+            String  instruction  =objRecipe.getString("instruction");
+
 
             Recipe recipe = new  Recipe(publicId,
                                          name,

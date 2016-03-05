@@ -90,6 +90,7 @@ public class SyncUtils {
                     try {
 
                         String status = response.getString("status");
+                        long time =response.getLong("time");
 
                         if(status.equals("success")){
 
@@ -112,7 +113,7 @@ public class SyncUtils {
 
                                 }
 
-                                FitCookApp.putSharedPreferencesValue(context,FitCookApp.TIME,response.getLong("time"));
+                                FitCookApp.putSharedPreferencesValue(context,FitCookApp.TIME,time);
                             }
 
                             if(callBack!=null)callBack.onFinished(false);

@@ -12,6 +12,7 @@ public class Recipe  extends Entity{
     private String publicId;
     private String name;
     private String url;
+    private String urlSmall;
     private String description;
     private String timeToPrepare;
     private String servings;
@@ -62,6 +63,7 @@ public class Recipe  extends Entity{
         this.publicId = publicId;
         this.name = name;
         this.url = url;
+        this.urlSmall =url.replace("upload/","upload/c_scale,h_200/f_auto/");;
         this.description = description;
         this.timeToPrepare = timeToPrepare;
         this.servings = servings;
@@ -72,6 +74,14 @@ public class Recipe  extends Entity{
         this.ativo=ativo;
         this.novo=novo;
 
+    }
+
+    public String getUrlSmall() {
+        return urlSmall;
+    }
+
+    public void setUrlSmall(String urlSmall) {
+        this.urlSmall = urlSmall;
     }
 
     public int getCategory() {

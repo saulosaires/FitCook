@@ -48,7 +48,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
 
         viewHolder.title.setText(recipe.getName());
-        Picasso.with(viewHolder.context).load(recipe.getUrl()).into(viewHolder.cover);
+        Picasso.with(viewHolder.context).load(recipe.getUrlSmall()).into(viewHolder.cover);
 
         viewHolder.title.setOnClickListener(new View.OnClickListener() {
             @Override

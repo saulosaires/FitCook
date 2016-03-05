@@ -34,12 +34,16 @@ public class RecipeDAO {
         Integer category     = c.getInt(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_CAT));
 		String instructions  = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_INST));
 		String ingredients   = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_INGR));
+		Integer recipeNew    = c.getInt(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_NEW));
 
 		Boolean favorite=false;
+		Boolean novo=false;
 
 		if(fav!=null && fav.intValue()==1)favorite=true;
+		if(recipeNew!=null && recipeNew.intValue()==1)novo=true;
 
-		return new Recipe(id, name,url,description,timeToPrepare,servings,favorite,category,ingredients,instructions);
+
+		return new Recipe(id, name,url,description,timeToPrepare,servings,favorite,category,ingredients,instructions,true,novo);
 
 	}
 

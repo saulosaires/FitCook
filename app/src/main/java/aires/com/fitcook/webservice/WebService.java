@@ -12,9 +12,9 @@ import aires.com.fitcook.FitCookApp;
 
 public class WebService {
 
-     public static final String url="http://fitcook-pingy.rhcloud.com/fitcook/service/";
+     public static final String url="http://mean-pingy.rhcloud.com/api/";
 
-     public static final String retrieve="recipe/retrieveAll";
+     public static final String retrieve="retrieveApp";
 
 
      public static void retrieveRecipes(long time,final CallBack callBack){
