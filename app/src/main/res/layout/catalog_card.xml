@@ -19,6 +19,7 @@
             android:scaleType="centerCrop"
             android:clickable="true"
             android:focusable="true"
+            android:transitionName="profile"
             android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
@@ -37,6 +38,7 @@
             android:layout_height="50dp"
             android:padding="7dp"
             android:maxLines="2"
+            android:transitionName="name_recipe"
             android:layout_gravity="center"
             android:textColor="@android:color/white"
             android:background="#55000000" />

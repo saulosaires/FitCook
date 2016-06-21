@@ -7,6 +7,9 @@ import android.preference.PreferenceManager;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Logger;
+import com.google.android.gms.analytics.Tracker;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.ArrayList;
@@ -20,10 +23,15 @@ import aires.com.fitcook.webservice.OkHttpStack;
 
 public class FitCookApp extends Application {
 
+    // The following line should be changed to include the correct property id.
+    private static final String PROPERTY_ID = "UA-42957667-5";
+
+
     public static final String CONTENT_AUTHORITY = "aires.com.fitcook";
 
     public static HashMap<Integer,Category> mapCategory = new HashMap<Integer,Category>();
 
+    private Tracker mTracker;
 
     private static FitCookApp mInstance;
     private RequestQueue mRequestQueue;
@@ -50,6 +58,17 @@ public class FitCookApp extends Application {
         mapCategory.put(R.id.category_salad, new Category(R.id.category_salad, R.drawable.salad_big, 8, "Saladas e Molhos"));
         mapCategory.put(R.id.category_soup,  new Category(R.id.category_soup,  R.drawable.soup_big,  9, "Sopa"));
         mapCategory.put(R.id.category_juice, new Category(R.id.category_juice, R.drawable.juice_big, 10,"Sucos"));
+
+    }
+
+    synchronized public Tracker getDefaultTracker() {
+
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker(PROPERTY_ID);
+        }
+        return mTracker;
 
     }
 

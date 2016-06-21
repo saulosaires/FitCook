@@ -1,15 +1,11 @@
 package aires.com.fitcook;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
@@ -21,11 +17,13 @@ import aires.com.fitcook.entity.Recipe;
 import aires.com.fitcook.fragment.EmptyFragment;
 import aires.com.fitcook.fragment.LoadingFragment;
 import aires.com.fitcook.fragment.RecipeFragment;
+import aires.com.fitcook.util.AnalyticsUtil;
 import aires.com.fitcook.util.SyncUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String FRAGMENT = "FRAGMENT";
+
     private static boolean  syncked=false;
 
     private DrawerLayout mDrawerLayout;
@@ -39,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AnalyticsUtil.send(this, "MainActivity");
+
         setUpActionBar();
         recipeDAO=new RecipeDAO(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -48,13 +48,6 @@ public class MainActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        RecipeFragment recipeFragment = (RecipeFragment) fragmentManager.findFragmentByTag(FRAGMENT);
-
-        if(recipeFragment!=null){
-            fragmentManager.beginTransaction().replace(R.id.container,recipeFragment).commit();
-        }
 
     }
 
@@ -69,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     private  void sync(){
 
         callBack=new SyncUtils.CallBack() {
@@ -173,8 +167,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     public void handleFavorite(){
 
 
@@ -219,8 +211,15 @@ public class MainActivity extends AppCompatActivity {
     private void showRecipeFragment(List<Recipe> listRecipe){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, RecipeFragment.newInstance((listRecipe)),FRAGMENT)
-                .commit();
+
+        RecipeFragment recipeFragment = (RecipeFragment) fragmentManager.findFragmentByTag(FRAGMENT);
+
+        if(recipeFragment!=null){
+            fragmentManager.beginTransaction().show(recipeFragment).commit();
+        }else{
+            fragmentManager.beginTransaction().replace(R.id.container, RecipeFragment.newInstance((listRecipe)),FRAGMENT)
+                    .commit();
+        }
 
     }
 

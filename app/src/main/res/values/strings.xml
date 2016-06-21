@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fit Cook</string>
+    <string name="app_name">Receitas Fit</string>
 
     <string name="description">Descrição</string>
     <string name="ingredients">Ingredientes</string>
@@ -9,7 +9,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="fav">Favoritos</string>
-    <string name="all_recipes">Receitas</string>
+    <string name="all_recipes">Receitas Fit</string>
 
     <string name="action_share">Compartilhar</string>
     <string name="title_activity_recipe_details">RecipeDetailsActivity</string>
@@ -21,7 +21,8 @@
     <string name="dialog_first_access_message">Falha ao configurar primeiro acesso</string>
     <string name="first_access_try_again">Tentar novamento</string>
 
-
+    <string name="time">Tempo</string>
+    <string name="serving">Porções</string>
     <string name="refresh">Atualizar</string>
 
     <string name="category">Categorias</string>

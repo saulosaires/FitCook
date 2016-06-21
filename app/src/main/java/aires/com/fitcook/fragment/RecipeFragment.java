@@ -1,40 +1,38 @@
 package aires.com.fitcook.fragment;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import aires.com.fitcook.R;
-import aires.com.fitcook.adapter.RecipeAdapter;
+import aires.com.fitcook.RecipeDetailsActivity;
 import aires.com.fitcook.entity.Recipe;
-
 
 public class RecipeFragment extends Fragment {
 
-    private static final String BUNDLE_RECYCLER_LAYOUT = "recycler.layout";
-
-    private OnFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
-    private GridLayoutManager manager;
+    private GridLayoutManager manager=null;
+
     private List<Recipe> listRecipes;
 
-
     public static RecipeFragment newInstance(List<Recipe> listRecipes) {
-
 
         RecipeFragment fragment = new RecipeFragment();
         fragment.init(listRecipes);
@@ -53,22 +51,18 @@ public class RecipeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         setRetainInstance(true);
         return inflater.inflate(R.layout.fragment_recipe, container, false);
 
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
     }
 
     @Override
@@ -77,52 +71,104 @@ public class RecipeFragment extends Fragment {
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
 
         if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
-
             manager = new GridLayoutManager(getActivity(), 2);
-
         }else if(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
-
             manager = new GridLayoutManager(getActivity(), 4);
-
         }
 
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setAdapter(new RecipeAdapter(listRecipes));
 
-
-
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
- /*
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
+
+        private List<Recipe> listRecipe;
+
+        public RecipeAdapter(List<Recipe> listRecipe) {
+            super();
+            this.listRecipe=listRecipe;
+
         }
-*/
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.catalog_card, viewGroup, false);
+
+            return new ViewHolder(v,viewGroup.getContext());
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder viewHolder, int i) {
+
+            final Recipe recipe   = listRecipe.get(i);
+
+            viewHolder.title.setText(recipe.getName());
+            Picasso.with(viewHolder.context).load(recipe.getUrlSmall()).into(viewHolder.cover);
+
+            viewHolder.title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleClick(viewHolder,recipe.getPublicId());
+                }
+            });
+
+            viewHolder.cover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleClick(viewHolder,recipe.getPublicId());
+                }
+            });
+
+
+        }
+
+        private void handleClick(ViewHolder viewHolder, String publicId){
+
+            Intent intent = new Intent(getActivity(), RecipeDetailsActivity.class);
+
+            intent.putExtra(RecipeDetailsActivity.EXTRA_RECIPE_ID,publicId);
+
+            Pair<View, String> p1 = Pair.create((View)viewHolder.cover, "profile");
+            Pair<View, String> p2 = Pair.create((View)viewHolder.title, "name_recipe");
+
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(getActivity(), p1,p2);
+
+            getActivity().startActivity(intent,options.toBundle());
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return listRecipe.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+
+            public ImageView cover;
+            public TextView title;
+            public Context context;
+
+            public ViewHolder(View itemView,Context context) {
+                super(itemView);
+
+                this.context= context;
+                cover       = (ImageView)itemView.findViewById(R.id.cover);
+                title       = (TextView)itemView.findViewById(R.id.title);
+            }
+
+        }
+
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
 
 }

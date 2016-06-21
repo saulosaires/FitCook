@@ -1,9 +1,13 @@
 package aires.com.fitcook;
 
 
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
+import android.app.Activity;
 import android.content.Intent;
 
 
+import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +34,7 @@ import java.util.List;
 
 import aires.com.fitcook.dao.RecipeDAO;
 import aires.com.fitcook.entity.Recipe;
+import aires.com.fitcook.util.AnalyticsUtil;
 import aires.com.fitcook.util.JsonUtil;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
@@ -41,6 +48,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
+
+        AnalyticsUtil.send(this, "RecipeDetailsActivity");
 
         recipeDAO= new RecipeDAO(getApplicationContext());
 
@@ -61,8 +70,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         init();
 
-
     }
+
 
 
     private void loadBackdrop() {
@@ -225,8 +234,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -243,10 +250,22 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         if (id == R.id.action_share) {
             share();
             return true;
+        }else if (id == android.R.id.home) {
+            supportFinishAfterTransition();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            supportFinishAfterTransition();
+        }else{
+            super.onBackPressed();
+        }
+
+    }
 }
