@@ -47,7 +47,7 @@ public class WebService {
                              }
                          });
 
-         FitCookApp.getInstance().addRequest(jsonObjectRequest, retrieve);
+         FitCookApp.addRequest(jsonObjectRequest, retrieve);
      }
 
 

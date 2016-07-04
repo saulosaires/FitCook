@@ -8,17 +8,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.okhttp.OkHttpClient;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import aires.com.fitcook.entity.Category;
-import aires.com.fitcook.entity.Recipe;
-import aires.com.fitcook.webservice.OkHttpStack;
 
 
 public class FitCookApp extends Application {
@@ -47,17 +41,12 @@ public class FitCookApp extends Application {
         mInstance = this;
 
 
-        mapCategory.put(R.id.category_drink, new Category(R.id.category_drink, R.drawable.drink_big, 0, "Bebidas"));
-        mapCategory.put(R.id.category_cake,  new Category(R.id.category_cake,  R.drawable.cake_big,  1, "Bolos e Tortas"));
-        mapCategory.put(R.id.category_meat,  new Category(R.id.category_meat,  R.drawable.meat_big,  2, "Carnes e Aves"));
-        mapCategory.put(R.id.category_candy, new Category(R.id.category_candy, R.drawable.candy_big, 3, "Doces e Sobremesas"));
-        mapCategory.put(R.id.category_snacks,new Category(R.id.category_snacks,R.drawable.snacks_big,4, "Lanches"));
-        mapCategory.put(R.id.category_pasta, new Category(R.id.category_pasta, R.drawable.pasta_big, 5, "Massa"));
-        mapCategory.put(R.id.category_bread, new Category(R.id.category_bread, R.drawable.bread_big, 6, "Pães"));
-        mapCategory.put(R.id.category_fish,  new Category(R.id.category_fish,  R.drawable.fish_big,  7, "Peixe o frutos do Mar"));
-        mapCategory.put(R.id.category_salad, new Category(R.id.category_salad, R.drawable.salad_big, 8, "Saladas e Molhos"));
-        mapCategory.put(R.id.category_soup,  new Category(R.id.category_soup,  R.drawable.soup_big,  9, "Sopa"));
-        mapCategory.put(R.id.category_juice, new Category(R.id.category_juice, R.drawable.juice_big, 10,"Sucos"));
+        mapCategory.put(R.id.category_drink, new Category(R.id.category_drink, R.drawable.drink_big, 0, getResources().getString(R.string.category_drink)));
+        mapCategory.put(R.id.category_cake,  new Category(R.id.category_cake,  R.drawable.cake_big,  1, getResources().getString(R.string.category_cake)));
+        mapCategory.put(R.id.category_meat,  new Category(R.id.category_meat,  R.drawable.meat_big,  2, getResources().getString(R.string.category_meat)));
+        mapCategory.put(R.id.category_snacks,new Category(R.id.category_snacks,R.drawable.snacks_big,4, getResources().getString(R.string.category_snack)));
+        mapCategory.put(R.id.category_pasta, new Category(R.id.category_pasta, R.drawable.pasta_big, 5, getResources().getString(R.string.category_pasta)));
+        mapCategory.put(R.id.category_salad, new Category(R.id.category_salad, R.drawable.salad_big, 8, getResources().getString(R.string.category_salad)));
 
     }
 
@@ -76,7 +65,7 @@ public class FitCookApp extends Application {
     {
         if (mRequestQueue == null)
         {
-            mRequestQueue = Volley.newRequestQueue(this, new OkHttpStack(new OkHttpClient()));
+            mRequestQueue = Volley.newRequestQueue(this, null);
         }
         return mRequestQueue;
     }

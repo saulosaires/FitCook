@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             mDrawerLayout.closeDrawers();
                             return true;
                         }
-
+                        int i=menuItem.getOrder();
                         switch (menuItem.getItemId()) {
 
                             case R.id.nav_home:
@@ -215,6 +215,8 @@ public class MainActivity extends AppCompatActivity {
         RecipeFragment recipeFragment = (RecipeFragment) fragmentManager.findFragmentByTag(FRAGMENT);
 
         if(recipeFragment!=null){
+            recipeFragment.init(listRecipe);
+            recipeFragment.update();
             fragmentManager.beginTransaction().show(recipeFragment).commit();
         }else{
             fragmentManager.beginTransaction().replace(R.id.container, RecipeFragment.newInstance((listRecipe)),FRAGMENT)

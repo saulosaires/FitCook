@@ -1,17 +1,10 @@
 
-
 package aires.com.fitcook.util;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.annotation.TargetApi;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 
+
+import android.os.AsyncTask;
 
 import com.android.volley.VolleyError;
 
@@ -22,39 +15,11 @@ import org.json.JSONObject;
 import java.util.List;
 
 import aires.com.fitcook.FitCookApp;
-import aires.com.fitcook.accounts.FitCookAccountService;
 import aires.com.fitcook.dao.RecipeDAO;
 import aires.com.fitcook.entity.Recipe;
 import aires.com.fitcook.webservice.WebService;
 
-
 public class SyncUtils {
-
-    private static final long SYNC_FREQUENCY = 60 * 60;  // 1 hour (in seconds)
-    private static final String CONTENT_AUTHORITY = FitCookApp.CONTENT_AUTHORITY;
-    public static final String ACCOUNT_TYPE = "aires.com.fitcook.account";
-
-
-    @TargetApi(Build.VERSION_CODES.FROYO)
-    public static void CreateSyncAccount(Context context) {
-
-        // Create account, if it's missing. (Either first run, or user has deleted account.)
-        Account account = FitCookAccountService.GetAccount(ACCOUNT_TYPE);
-        AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
-
-        if (accountManager.addAccountExplicitly(account, null, null)) {
-            // Inform the system that this account supports sync
-            ContentResolver.setIsSyncable(account, CONTENT_AUTHORITY, 1);
-            // Inform the system that this account is eligible for auto sync when the network is up
-            ContentResolver.setSyncAutomatically(account, CONTENT_AUTHORITY, true);
-            // Recommend a schedule for automatic synchronization. The system may modify this based
-            // on other scheduled syncs and network utilization.
-            ContentResolver.addPeriodicSync(account, CONTENT_AUTHORITY, new Bundle(), SYNC_FREQUENCY);
-
-        }
-
-
-    }
 
     public static void TriggerRefresh(Context context,CallBack callBack) {
 
@@ -90,7 +55,7 @@ public class SyncUtils {
                     try {
 
                         String status = response.getString("status");
-                        long time =response.getLong("time");
+                        long time     = response.getLong("time");
 
                         if(status.equals("success")){
 
@@ -136,9 +101,8 @@ public class SyncUtils {
             };
 
 
-            FitCookApp.getInstance().cancelAllRequests(WebService.retrieve);
+            FitCookApp.cancelAllRequests(WebService.retrieve);
             WebService.retrieveRecipes(FitCookApp.getSharedPreferencesValue(context,FitCookApp.TIME,0),wsCallBack);
-
 
             return null;
         }

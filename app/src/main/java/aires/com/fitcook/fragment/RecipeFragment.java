@@ -3,11 +3,14 @@ package aires.com.fitcook.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.balysv.materialripple.MaterialRippleLayout;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -87,6 +92,11 @@ public class RecipeFragment extends Fragment {
         super.onDestroy();
     }
 
+    public void update(){
+        mRecyclerView.setAdapter(new RecipeAdapter(listRecipes));
+
+    }
+
     public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
         private List<Recipe> listRecipe;
@@ -111,7 +121,33 @@ public class RecipeFragment extends Fragment {
             final Recipe recipe   = listRecipe.get(i);
 
             viewHolder.title.setText(recipe.getName());
-            Picasso.with(viewHolder.context).load(recipe.getUrlSmall()).into(viewHolder.cover);
+            Picasso.with(viewHolder.context)
+                    .load(recipe.getUrlSmall())
+                    .into(viewHolder.cover, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                            Bitmap bitmap =  ((BitmapDrawable)viewHolder.cover.getDrawable()).getBitmap();
+
+                            Palette palette  = Palette.from(bitmap).generate();
+                            Palette.Swatch swatch = palette.getVibrantSwatch();
+
+                            if (swatch != null) {
+                                viewHolder.warpper.setBackgroundColor(swatch.getRgb());
+
+                                //viewHolder.title.setBackgroundColor(swatch.getRgb());
+                                viewHolder.title.setTextColor(swatch.getTitleTextColor());
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
 
             viewHolder.title.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -153,6 +189,7 @@ public class RecipeFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder{
 
+            public MaterialRippleLayout warpper;
             public ImageView cover;
             public TextView title;
             public Context context;
@@ -163,6 +200,7 @@ public class RecipeFragment extends Fragment {
                 this.context= context;
                 cover       = (ImageView)itemView.findViewById(R.id.cover);
                 title       = (TextView)itemView.findViewById(R.id.title);
+                warpper     = (MaterialRippleLayout) itemView.findViewById(R.id.warpper);
             }
 
         }

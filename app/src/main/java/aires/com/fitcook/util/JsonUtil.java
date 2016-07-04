@@ -67,17 +67,6 @@ public class JsonUtil {
         return listIngredients;
     }
 
-    public static List<Category> parseCategory(JSONArray category) throws JSONException {
 
-        List<Category> listCategory= new ArrayList<Category>();
-
-        for(int i = 0; i < category.length(); i++) {
-
-            listCategory.add( FitCookApp.mapCategory.get(  category.get(i).toString()));
-
-        }
-
-        return listCategory;
-    }
 
 }

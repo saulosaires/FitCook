@@ -29,15 +29,10 @@
 
     <string name="category_drink">Bebidas</string>
     <string name="category_cake">Bolos e Tortas</string>
-    <string name="category_meat">Carnes e Aves</string>
-    <string name="category_candy">Doces e Sobremesas</string>
-    <string name="category_snack">Lanches</string>
-    <string name="category_pasta">Massas</string>
-    <string name="category_bread">Pães</string>
-    <string name="category_fish">Peixes e Frutos do Mar</string>
-    <string name="category_salad">Saladas e Molhos</string>
-    <string name="category_soup">Sopas</string>
-    <string name="category_juice">Sucos</string>
+    <string name="category_meat">Carnes e Frutos do Mar</string>
+    <string name="category_snack">Lanches e Sobremesas</string>
+    <string name="category_pasta">Massas e Pães</string>
+    <string name="category_salad">Saladas, Molhos e Sopas</string>
 
     <string name="empty_category">Sem receitas :(</string>
     <string name="empty_recipes">Sem receitas encontradas</string>

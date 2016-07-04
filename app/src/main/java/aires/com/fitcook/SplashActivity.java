@@ -76,7 +76,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void firstAccess() {
 
-        SyncUtils.CreateSyncAccount(this);
+    //    SyncUtils.CreateSyncAccount(this);
 
         SyncUtils.TriggerRefresh(this,callBack);
 

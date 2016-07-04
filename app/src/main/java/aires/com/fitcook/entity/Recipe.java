@@ -63,7 +63,7 @@ public class Recipe  extends Entity{
         this.publicId = publicId;
         this.name = name;
         this.url = url;
-        this.urlSmall =url.replace("upload/","upload/c_scale,h_200/f_auto/");;
+        this.urlSmall =url.replace("upload/","upload/c_scale,h_200/f_auto/");
         this.description = description;
         this.timeToPrepare = timeToPrepare;
         this.servings = servings;

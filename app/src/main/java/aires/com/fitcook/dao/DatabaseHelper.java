@@ -13,15 +13,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
     // Database Name
     private static final String DATABASE_NAME = "FITCOOK_DB.db";
- 
-    /* Table Names
-    public static final String TABLE_CATEGORY = "TB_CATEGORY";
-    public static final String KEY_CATEGORY_DESCRIPTION = "description";
-    public static final String KEY_CATEGORY_PUBLICID = "publicid";
-    private static final String CREATE_TABLE_CAT = "CREATE TABLE "+ TABLE_CATEGORY+"("+KEY_CATEGORY_PUBLICID+" VARCHAR(100),"+
-                                                                                       KEY_CATEGORY_DESCRIPTION+" VARCHAR(500));  ";
-
-  */
 
     public static final String TABLE_RECIPE = "TABLE_RECIPE";
     public static final String KEY_RECIPE_PUBLICID = "publicid";

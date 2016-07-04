@@ -54,11 +54,8 @@ public class RecipeDAO {
 	  if(recipe==null)return false;
 
       long todo_id = db.insert(DatabaseHelper.TABLE_RECIPE, null, recipe.toContentValues());
- 
-	  if(todo_id==-1)
-	    	return false;
-	  else
-	    	return true;
+
+	  return todo_id != -1;
 	  
   }
 
@@ -108,11 +105,8 @@ public class RecipeDAO {
       long rows = db.update(DatabaseHelper.TABLE_RECIPE,
 			  			    recipe.toContentValues(),
 			  			    DatabaseHelper.KEY_RECIPE_PUBLICID + " like '"+recipe.getPublicId()+"'",null);
- 
-	  if(rows==0)
-	    	return false;
-	  else
-	    	return true;
+
+	  return rows != 0;
 	  
   }
 
@@ -121,10 +115,7 @@ public class RecipeDAO {
 	  SQLiteDatabase db = helper.getDatabase();
 	  long rows =db.delete(DatabaseHelper.TABLE_RECIPE, DatabaseHelper.KEY_RECIPE_PUBLICID + " like '" + id + "'", null);
 
-	  if(rows==0)
-	    	return false;
-	  else
-	    	return true;
+	  return rows != 0;
 
  }
   
@@ -133,10 +124,7 @@ public class RecipeDAO {
 	  SQLiteDatabase db = helper.getDatabase();
 	  long rows =db.delete(DatabaseHelper.TABLE_RECIPE, null, null);
 
-	  if(rows==0)
-	    	return false;
-	  else
-	    	return true;
+	 return rows != 0;
 
  }
 
@@ -231,10 +219,7 @@ public class RecipeDAO {
 
 		long rows = db.update(DatabaseHelper.TABLE_RECIPE,values,null,null);
 
-		if(rows==0)
-			return false;
-		else
-			return true;
+		return rows != 0;
 
 	}
 
