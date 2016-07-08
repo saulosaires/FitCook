@@ -39,5 +39,6 @@
     <string name="empty_fav">Sem receitas favoritas :(</string>
     <string name="title_activity_fav">Favoritos</string>
 
+    <string name="search_title">Procurando algo especial?</string>
 
 </resources>

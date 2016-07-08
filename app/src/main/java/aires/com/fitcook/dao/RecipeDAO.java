@@ -22,7 +22,7 @@ public class RecipeDAO {
 
   }
 
-	public Recipe fromCursor(Cursor c){
+  public Recipe fromCursor(Cursor c){
 
 		String id            = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_PUBLICID));
 		String name          = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_NAME));
@@ -97,8 +97,37 @@ public class RecipeDAO {
 
   }
 
-  
-  public boolean update(Recipe recipe){
+  public List<Recipe> search(String name){
+
+		SQLiteDatabase db = helper.getDatabase();
+
+		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE + " WHERE "
+				+ DatabaseHelper.KEY_RECIPE_NAME + " like '%" + name+"%'";
+
+		Cursor c = db.rawQuery(selectQuery, null);
+
+		if (c != null)
+			c.moveToFirst();
+
+		if(c.getCount()==0)return null;
+
+	    List<Recipe> listRecipe = new ArrayList<Recipe>();
+
+	    while (!c.isAfterLast()) {
+
+		  listRecipe.add(	fromCursor(c));
+		  c.moveToNext();
+	    }
+
+	    c.close();
+
+	  return listRecipe;
+
+
+  }
+
+
+	public boolean update(Recipe recipe){
 
 	  SQLiteDatabase db = helper.getDatabase();
 
@@ -116,15 +145,6 @@ public class RecipeDAO {
 	  long rows =db.delete(DatabaseHelper.TABLE_RECIPE, DatabaseHelper.KEY_RECIPE_PUBLICID + " like '" + id + "'", null);
 
 	  return rows != 0;
-
- }
-  
- public boolean deleteAll(){
-	  
-	  SQLiteDatabase db = helper.getDatabase();
-	  long rows =db.delete(DatabaseHelper.TABLE_RECIPE, null, null);
-
-	 return rows != 0;
 
  }
 
