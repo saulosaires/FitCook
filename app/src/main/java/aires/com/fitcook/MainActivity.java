@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FRAGMENT = "FRAGMENT";
 
     private static boolean  syncked=false;
+    private static boolean  quering=false;
 
     private DrawerLayout mDrawerLayout;
     private SyncUtils.CallBack callBack;
@@ -49,56 +50,33 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (navigationView != null) {
+        if (navigationView != null)
             setupDrawerContent(navigationView);
+
+
+        if(!syncked) {
+            sync();
+        }else{
+            handleRecipes(recipeDAO.getAll());
         }
 
-        if (getIntent() != null) {
-            handleIntent(getIntent());
-        }
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
 
-    private void handleIntent(Intent intent) {
 
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 
-            String query = intent.getStringExtra(SearchManager.QUERY);
-
-            setTitle(query);
-
-            showRecipeFragment(recipeDAO.search(query));
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.main, menu);
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        if(!syncked) {
-            sync();
-        }else{
-            handleAllRecipes();
-        }
-
-    }
 
     private  void sync(){
 
@@ -115,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinished(boolean error) {
 
-                handleAllRecipes();
+                handleRecipes(recipeDAO.getAll());
                 syncked=true;
             }
         };
@@ -155,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
 
                             case R.id.nav_home:
-                                handleAllRecipes();
+                                handleRecipes(recipeDAO.getAll());
                                 break;
                             case R.id.fav:
                                 handleFavorite();
@@ -183,11 +161,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(true);
     }
 
-    private  void handleAllRecipes(){
+    private  void handleRecipes(List<Recipe> listRecipe){
 
         setTitle(getResources().getString(R.string.all_recipes));
 
-        List<Recipe> listRecipe = recipeDAO.getAll();
+
 
         if(listRecipe==null  || listRecipe.size()==0){
 

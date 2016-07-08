@@ -87,10 +87,7 @@ public class RecipeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+
 
     public void update(){
         mRecyclerView.setAdapter(new RecipeAdapter(listRecipes));
