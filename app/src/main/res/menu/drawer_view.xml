@@ -27,6 +27,11 @@
             android:icon="@drawable/ic_favorite_black_48dp"
             android:title="@string/fav" />
 
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/ic_share_black_48dp"
+            android:title="@string/share" />
+
         <item android:title="@string/category" android:id="@+id/category" >
             <menu>
                 <item  android:title="@string/category_drink"  android:id="@+id/category_drink"  android:icon="@drawable/drink"  android:orderInCategory="0" android:checkable="true"/>
@@ -37,5 +42,6 @@
                 <item  android:title="@string/category_salad" android:id="@+id/category_salad"  android:icon="@drawable/salad"  android:orderInCategory="8" android:checkable="true"/>
             </menu>
         </item>
+        
 </group>
 </menu>

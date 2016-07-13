@@ -40,5 +40,7 @@
     <string name="title_activity_fav">Favoritos</string>
 
     <string name="search_title">Procurando algo especial?</string>
+    <string name="share">Compartilhar</string>
+
 
 </resources>

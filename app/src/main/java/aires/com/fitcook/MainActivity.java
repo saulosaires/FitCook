@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -22,6 +24,7 @@ import aires.com.fitcook.entity.Recipe;
 import aires.com.fitcook.fragment.EmptyFragment;
 import aires.com.fitcook.fragment.LoadingFragment;
 import aires.com.fitcook.fragment.RecipeFragment;
+import aires.com.fitcook.fragment.SearchDialogFragment;
 import aires.com.fitcook.util.AnalyticsUtil;
 import aires.com.fitcook.util.SyncUtils;
 
@@ -30,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String FRAGMENT = "FRAGMENT";
 
     private static boolean  syncked=false;
-    private static boolean  quering=false;
 
     private DrawerLayout mDrawerLayout;
     private SyncUtils.CallBack callBack;
@@ -138,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.fav:
                                 handleFavorite();
                                 break;
+                            case R.id.share:
+                                handleShare();
+                                break;
 
                             default:
                                 handleCategory(menuItem.getItemId());
@@ -179,6 +184,19 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
+    }
+
+    public void handleShare(){
+
+        String text="Experimente esse app:https://play.google.com/store/apps/details?id=aires.com.fitcook";
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Receitas");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+        startActivity(Intent.createChooser(sharingIntent, "Compartilhar"));
 
     }
 
@@ -246,6 +264,19 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+
+            case R.id.search:{
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                SearchDialogFragment groupDialogFragment = SearchDialogFragment.newInstance();
+                groupDialogFragment.show(ft,"dialog");
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
