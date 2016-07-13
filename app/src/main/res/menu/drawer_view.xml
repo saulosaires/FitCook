@@ -28,7 +28,7 @@
             android:title="@string/fav" />
 
         <item
-            android:id="@+id/share"
+            android:id="@+id/share_main"
             android:icon="@drawable/ic_share_black_48dp"
             android:title="@string/share" />
 
@@ -42,6 +42,6 @@
                 <item  android:title="@string/category_salad" android:id="@+id/category_salad"  android:icon="@drawable/salad"  android:orderInCategory="8" android:checkable="true"/>
             </menu>
         </item>
-        
+
 </group>
 </menu>

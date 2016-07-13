@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                             mDrawerLayout.closeDrawers();
                             return true;
                         }
-                        int i=menuItem.getOrder();
+
                         switch (menuItem.getItemId()) {
 
                             case R.id.nav_home:
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.fav:
                                 handleFavorite();
                                 break;
-                            case R.id.share:
+                            case R.id.share_main:
                                 handleShare();
                                 break;
 
