@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 
 import aires.com.fitcook.R;
 
@@ -51,6 +52,10 @@ public class SearchDialogFragment extends DialogFragment {
 
         v.setMinimumWidth((int) displayRectangle.width());
         v.setMinimumHeight((int) displayRectangle.height());
+
+        EditText search= (EditText) v.findViewById(R.id.search);
+
+        search.requestFocus();
 
         return v;
     }

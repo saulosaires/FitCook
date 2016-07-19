@@ -15,7 +15,7 @@
             android:id="@+id/header_container"
 
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="120dp"
             android:orientation="vertical"
             android:background="@color/colorAccent"
             android:padding="16dp">
@@ -27,34 +27,17 @@
                 android:layout_height="wrap_content"
                 android:padding="6dp"
                 android:textStyle="bold"
-                android:text="string/create_group"
-                android:background="@color/colorAccent"
+                android:text="@string/search_title"
                 android:textColor="@android:color/white"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/group_label"
-                android:hint="string/group_label"
+                android:id="@+id/search"
+                android:theme="@style/editTextTheme"
                 android:textColorHint="@android:color/white"
                 android:textColor="@android:color/white"/>
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="6dp"
-                android:textStyle="bold"
-                android:text="string/Friend"
-                android:background="@color/colorAccent"
-                android:textColor="@android:color/white"/>
-
-            <AutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/invitation"
-                android:textColorHint="@android:color/white"
-                android:textColor="@android:color/white"/>
 
 
 
@@ -75,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_autorenew_white_48dp"
+        android:src="@drawable/ic_search_white_48dp"
         app:layout_anchor="@id/header_container"
         app:layout_anchorGravity="bottom|right|end"/>
 
