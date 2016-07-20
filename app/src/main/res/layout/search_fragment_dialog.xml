@@ -44,11 +44,140 @@
         </LinearLayout>
 
 
-        <ListView
-            android:id="@+id/list_invites"
+        <LinearLayout
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"/>
+            android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@android:color/holo_blue_light"
+                android:text="@string/category_drink"
+                android:textColor="@android:color/white"/>
+
+            </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:background="@color/orange"
+                android:text="@string/category_cake"
+                android:textColor="@android:color/white"/>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:text="@string/category_meat"
+                android:textColor="@android:color/white"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:background="@color/bright_pink"
+                android:text="@string/category_snack"
+                android:textColor="@android:color/white"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:background="@color/magenta"
+                android:text="@string/category_pasta"
+                android:textColor="@android:color/white"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_weight="1"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:background="@color/violet"
+                android:text="@string/category_salad"
+                android:textColor="@android:color/white"/>
+
+        </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
