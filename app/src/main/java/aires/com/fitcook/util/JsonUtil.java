@@ -23,6 +23,7 @@ public class JsonUtil {
 
             Boolean ativo        =obj.getBoolean("ativo");
             String publicId      =obj.getString("_id");
+            long time            =obj.getLong("time");
 
             JSONObject objRecipe =obj.getJSONObject("recipe");
 
@@ -37,6 +38,7 @@ public class JsonUtil {
             String  instruction  =objRecipe.getString("instruction");
 
 
+
             Recipe recipe = new  Recipe(publicId,
                                          name,
                                          url,
@@ -47,7 +49,8 @@ public class JsonUtil {
                                          category,
                                          ingredients,
                                          instruction,
-                                         ativo,true);
+                                         ativo,
+                                         time);
 
             listRecipe.add(recipe);
         }

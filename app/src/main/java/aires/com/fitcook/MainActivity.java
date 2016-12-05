@@ -30,7 +30,7 @@ import aires.com.fitcook.util.SyncUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String FRAGMENT = "FRAGMENT";
+    public static final String FRAGMENT = "FRAGMENT";
 
     private static boolean  syncked=false;
 

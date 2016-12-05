@@ -42,5 +42,7 @@
     <string name="search_title">Procurando algo especial?</string>
     <string name="share">Compartilhar</string>
     <string name="search">Receitas !</string>
+    <string name="search_empty">Digite algo para buscar!</string>
+    <string name="search_pre">Busca:</string>
 
 </resources>

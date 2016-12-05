@@ -10,11 +10,20 @@ public class Category {
     private int bitPosition;
     private String description;
     private int icon;
+    private int color;
 
     public Category(int id,int icon,int bitPosition,String description) {
         this.id=id;
         this.icon=icon;
         this.bitPosition=bitPosition;
+        this.description = description;
+    }
+
+    public Category(int id,int icon,int bitPosition,int color,String description) {
+        this.id=id;
+        this.icon=icon;
+        this.bitPosition=bitPosition;
+        this.color=color;
         this.description = description;
     }
 

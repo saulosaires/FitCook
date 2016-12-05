@@ -34,16 +34,14 @@ public class RecipeDAO {
         Integer category     = c.getInt(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_CAT));
 		String instructions  = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_INST));
 		String ingredients   = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_INGR));
-		Integer recipeNew    = c.getInt(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_NEW));
+		double time          = c.getDouble(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_TIME));
 
 		Boolean favorite=false;
-		Boolean novo=false;
 
 		if(fav!=null && fav.intValue()==1)favorite=true;
-		if(recipeNew!=null && recipeNew.intValue()==1)novo=true;
 
 
-		return new Recipe(id, name,url,description,timeToPrepare,servings,favorite,category,ingredients,instructions,true,novo);
+		return new Recipe(id, name,url,description,timeToPrepare,servings,favorite,category,ingredients,instructions,true,time);
 
 	}
 
@@ -102,7 +100,7 @@ public class RecipeDAO {
 		SQLiteDatabase db = helper.getDatabase();
 
 		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE + " WHERE "
-				+ DatabaseHelper.KEY_RECIPE_NAME + " like '%" + name+"%'";
+				+ DatabaseHelper.KEY_RECIPE_NAME + " like '%" + name+"%'  order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";;
 
 		Cursor c = db.rawQuery(selectQuery, null);
 
@@ -152,7 +150,7 @@ public class RecipeDAO {
 
 		SQLiteDatabase db = helper.getDatabase();
 
-		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE+" order by "+DatabaseHelper.KEY_RECIPE_NEW+" DESC";
+		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE+" order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";
 
 		Cursor c = db.rawQuery(selectQuery,  new String[] {});
 
@@ -179,7 +177,7 @@ public class RecipeDAO {
 		SQLiteDatabase db = helper.getDatabase();
 
 		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE + " WHERE "
-				+ DatabaseHelper.KEY_RECIPE_FAV + "=1";
+				+ DatabaseHelper.KEY_RECIPE_FAV + "=1  order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";;
 
 		Cursor c = db.rawQuery(selectQuery,  new String[] {});
 
@@ -208,7 +206,7 @@ public class RecipeDAO {
 		SQLiteDatabase db = helper.getDatabase();
 
 		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE + " WHERE "
-				+ "("+DatabaseHelper.KEY_RECIPE_CAT + "&"+value+")="+value;
+				+ "("+DatabaseHelper.KEY_RECIPE_CAT + "&"+value+")="+value+" order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";;
 
 		Cursor c = db.rawQuery(selectQuery,  new String[] {});
 
@@ -230,17 +228,5 @@ public class RecipeDAO {
 		return listRecipe;
 	}
 
-	public boolean setNew(Boolean novo){
-
-		SQLiteDatabase db = helper.getDatabase();
-
-		ContentValues values = new ContentValues();
-		values.put(DatabaseHelper.KEY_RECIPE_NEW, novo?1:0);
-
-		long rows = db.update(DatabaseHelper.TABLE_RECIPE,values,null,null);
-
-		return rows != 0;
-
-	}
 
 }

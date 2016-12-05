@@ -34,11 +34,11 @@
 
         <item android:title="@string/category" android:id="@+id/category" >
             <menu>
-                <item  android:title="@string/category_drink"  android:id="@+id/category_drink"  android:icon="@drawable/drink"  android:orderInCategory="0" android:checkable="true"/>
-                <item  android:title="@string/category_cake"          android:id="@+id/category_cake"   android:icon="@drawable/cake"   android:orderInCategory="1" android:checkable="true"/>
+                <item  android:title="@string/category_drink" android:id="@+id/category_drink"  android:icon="@drawable/drink"  android:orderInCategory="0" android:checkable="true"/>
+                <item  android:title="@string/category_cake"  android:id="@+id/category_cake"   android:icon="@drawable/cake"   android:orderInCategory="1" android:checkable="true"/>
                 <item  android:title="@string/category_meat"  android:id="@+id/category_meat"   android:icon="@drawable/meat"   android:orderInCategory="2" android:checkable="true"/>
-                <item  android:title="@string/category_snack"    android:id="@+id/category_snacks" android:icon="@drawable/snacks" android:orderInCategory="4" android:checkable="true"/>
-                <item  android:title="@string/category_pasta"           android:id="@+id/category_pasta"  android:icon="@drawable/pasta"  android:orderInCategory="5" android:checkable="true"/>
+                <item  android:title="@string/category_snack" android:id="@+id/category_snacks" android:icon="@drawable/snacks" android:orderInCategory="4" android:checkable="true"/>
+                <item  android:title="@string/category_pasta" android:id="@+id/category_pasta"  android:icon="@drawable/pasta"  android:orderInCategory="5" android:checkable="true"/>
                 <item  android:title="@string/category_salad" android:id="@+id/category_salad"  android:icon="@drawable/salad"  android:orderInCategory="8" android:checkable="true"/>
             </menu>
         </item>

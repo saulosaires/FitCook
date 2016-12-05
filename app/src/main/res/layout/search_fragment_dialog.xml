@@ -22,7 +22,7 @@
 
 
             <TextView
-                android:id="@+id/name_group"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
@@ -64,11 +64,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:background="@android:color/holo_blue_light"
                 android:text="@string/category_drink"
+                android:id="@+id/category_drink"
                 android:textColor="@android:color/white"/>
 
             </android.support.v7.widget.CardView>
@@ -87,10 +88,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:background="@color/orange"
                 android:text="@string/category_cake"
+                android:id="@+id/category_cake"
                 android:textColor="@android:color/white"/>
 
         </android.support.v7.widget.CardView>
@@ -108,10 +110,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:background="@color/red"
                 android:text="@string/category_meat"
+                android:id="@+id/category_meat"
                 android:textColor="@android:color/white"/>
 
         </android.support.v7.widget.CardView>
@@ -128,10 +131,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:background="@color/bright_pink"
                 android:text="@string/category_snack"
+                android:id="@+id/category_snack"
                 android:textColor="@android:color/white"/>
 
         </android.support.v7.widget.CardView>
@@ -148,10 +152,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:background="@color/magenta"
                 android:text="@string/category_pasta"
+                android:id="@+id/category_pasta"
                 android:textColor="@android:color/white"/>
 
         </android.support.v7.widget.CardView>
@@ -168,10 +173,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 android:background="@color/violet"
                 android:text="@string/category_salad"
+                android:id="@+id/category_salad"
                 android:textColor="@android:color/white"/>
 
         </android.support.v7.widget.CardView>

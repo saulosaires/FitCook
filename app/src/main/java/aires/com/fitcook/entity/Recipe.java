@@ -21,7 +21,7 @@ public class Recipe  extends Entity{
     private String ingredients;
     private String instruction;
     private Boolean ativo;
-    private Boolean novo;
+    private double time;
 
     public Recipe(String publicId,
                        String name,
@@ -58,7 +58,7 @@ public class Recipe  extends Entity{
                   String ingredients,
                   String instruction,
                   Boolean ativo,
-                  Boolean novo) {
+                  double time) {
 
         this.publicId = publicId;
         this.name = name;
@@ -72,7 +72,7 @@ public class Recipe  extends Entity{
         this.ingredients=ingredients;
         this.instruction=instruction;
         this.ativo=ativo;
-        this.novo=novo;
+        this.time=time;
 
     }
 
@@ -172,12 +172,12 @@ public class Recipe  extends Entity{
         this.ativo = ativo;
     }
 
-    public Boolean getNovo() {
-        return novo;
+    public double getTime() {
+        return time;
     }
 
-    public void setNovo(Boolean novo) {
-        this.novo = novo;
+    public void setTime(double time) {
+        this.time = time;
     }
 
     public ContentValues toContentValues(){
@@ -194,8 +194,7 @@ public class Recipe  extends Entity{
         values.put(DatabaseHelper.KEY_RECIPE_INGR, ingredients);
         values.put(DatabaseHelper.KEY_RECIPE_FAV, favorite?1:0);
         values.put(DatabaseHelper.KEY_RECIPE_CAT, category);
-        values.put(DatabaseHelper.KEY_RECIPE_NEW, novo?1:0);
-
+        values.put(DatabaseHelper.KEY_RECIPE_TIME, time);
         return values;
 
 
