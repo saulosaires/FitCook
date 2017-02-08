@@ -77,7 +77,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void loadBackdrop() {
 
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        Picasso.with(this).load(recipe.getUrl()).into(imageView);
+
+        PicassoCache.getPicassoInstance(this).load(recipe.getUrlMedium()).into(imageView);
 
         final FloatingActionButton fab =(FloatingActionButton)findViewById(R.id.fab);
 
@@ -122,10 +123,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         description.setText(recipe.getDescription());
 
         TextView time=  (TextView)cardIntro.findViewById(R.id.time);
-                time.setText(recipe.getTimeToPrepare());
+        time.setText(recipe.getTimeToPrepare());
 
         TextView servings=  (TextView)cardIntro.findViewById(R.id.servings);
-                servings.setText(recipe.getServings().toString());
+        servings.setText(recipe.getServings().toString());
 
     }
 
@@ -228,9 +229,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shared.toString());
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
-         } catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-         }
+        }
 
     }
 

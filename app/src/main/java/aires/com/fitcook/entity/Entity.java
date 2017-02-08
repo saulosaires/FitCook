@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 public abstract class Entity implements Serializable{
 
-    public abstract ContentValues toContentValues();
+
 	
 }

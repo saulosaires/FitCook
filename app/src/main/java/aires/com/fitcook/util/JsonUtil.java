@@ -13,6 +13,41 @@ import aires.com.fitcook.entity.Recipe;
 
 public class JsonUtil {
 
+    public static Recipe parseRecipe(JSONObject recipeJson) throws JSONException {
+
+        Boolean ativo        =recipeJson.getBoolean("ativo");
+        int category         =recipeJson.getInt("category");
+        String description   =recipeJson.getString("description");
+        String  ingredients  =recipeJson.getString("ingredients");
+        String  instruction  =recipeJson.getString("instruction");
+        String name          =recipeJson.getString("name");
+        String publicId      =recipeJson.getString("publicId");
+        String servings      =recipeJson.getString("servings");
+        long time            =recipeJson.getLong("time");
+        String timeToPrepare =recipeJson.getString("timeToPrepare");
+        String url           =recipeJson.getString("url");
+
+
+        Recipe recipe = new  Recipe(publicId,
+                                    name,
+                                    url,
+                                    description,
+                                    timeToPrepare,
+                                    servings,
+                                    false,
+                                    category,
+                                    ingredients,
+                                    instruction,
+                                    ativo,
+                                    time);
+
+
+
+        return recipe;
+
+
+    }
+
     public static List<Recipe> parseRecipe(JSONArray arrayRecipe) throws JSONException {
 
         List<Recipe> listRecipe= new ArrayList<Recipe>();

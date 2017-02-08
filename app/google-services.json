@@ -1,0 +1,45 @@
+{
+  "project_info": {
+    "project_number": "966459754495",
+    "firebase_url": "https://fitcook-44eb4.firebaseio.com",
+    "project_id": "fitcook-44eb4",
+    "storage_bucket": "fitcook-44eb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966459754495:android:c66d7d9206f55d27",
+        "android_client_info": {
+          "package_name": "aires.com.fitcook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966459754495-1tdqvis8ohpjid1jn6scf3m4us1qokis.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyk--2_Ks0UpQdvVF8ZCXv4a1EgePyI0k"
+        },
+        {
+          "current_key": "AIzaSyCBna_r6UKHg2P1qewTgS373kAhxi5vLk0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

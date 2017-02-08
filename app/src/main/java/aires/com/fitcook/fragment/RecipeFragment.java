@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import aires.com.fitcook.PicassoCache;
 import aires.com.fitcook.R;
 import aires.com.fitcook.RecipeDetailsActivity;
 import aires.com.fitcook.entity.Recipe;
@@ -118,8 +119,8 @@ public class RecipeFragment extends Fragment {
             final Recipe recipe   = listRecipe.get(i);
 
             viewHolder.title.setText(recipe.getName());
-            Picasso.with(viewHolder.context)
-                    .load(recipe.getUrlSmall())
+            PicassoCache.getPicassoInstance(viewHolder.context)
+                    .load(recipe.getUrl())
                     .into(viewHolder.cover, new Callback() {
                         @Override
                         public void onSuccess() {

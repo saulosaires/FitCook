@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
- 
+
     // Database Version
     private static final int DATABASE_VERSION = 2;
- 
+
     // Database Name
     private static final String DATABASE_NAME = "FITCOOK_DB.db";
 
@@ -44,47 +44,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
 
-	  super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    
-  }
-  
-  
-  @Override
-  public void onCreate(SQLiteDatabase db) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+    }
 
 
-      db.execSQL(CREATE_TABLE_RECIPE);
-	   
-  }
-  @Override
-  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      if (oldVersion < 3) {
+    @Override
+    public void onCreate(SQLiteDatabase db) {
 
-          db.execSQL("CREATE TABLE my_table_temp as  SELECT "+
-                  KEY_RECIPE_PUBLICID+" , " +
-                  KEY_RECIPE_NAME+" , " +
-                  KEY_RECIPE_URL+" , " +
-                  KEY_RECIPE_DESCRIPTION+" , " +
-                  KEY_RECIPE_TIME_TO_PREPARE+" , " +
-                  KEY_RECIPE_SERVINGS+" , " +
-                  KEY_RECIPE_INST+" , " +
-                  KEY_RECIPE_INGR+" , " +
-                  KEY_RECIPE_CAT+" , " +
-                  KEY_RECIPE_FAV+
-                  " FROM "+TABLE_RECIPE+" ");
 
-          db.execSQL("ALTER TABLE my_table_temp ADD COLUMN " + KEY_RECIPE_TIME + " DOUBLE");
+        db.execSQL(CREATE_TABLE_RECIPE);
 
-          db.execSQL("DROP TABLE "+TABLE_RECIPE);
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 3) {
 
-          db.execSQL("ALTER TABLE my_table_temp RENAME TO "+TABLE_RECIPE);
-      }
-  	
-  }  
-  
-  public SQLiteDatabase getDatabase() {
-    return this.getReadableDatabase();
-  }
+            db.execSQL("CREATE TABLE my_table_temp as  SELECT "+
+                    KEY_RECIPE_PUBLICID+" , " +
+                    KEY_RECIPE_NAME+" , " +
+                    KEY_RECIPE_URL+" , " +
+                    KEY_RECIPE_DESCRIPTION+" , " +
+                    KEY_RECIPE_TIME_TO_PREPARE+" , " +
+                    KEY_RECIPE_SERVINGS+" , " +
+                    KEY_RECIPE_INST+" , " +
+                    KEY_RECIPE_INGR+" , " +
+                    KEY_RECIPE_CAT+" , " +
+                    KEY_RECIPE_FAV+
+                    " FROM "+TABLE_RECIPE+" ");
+
+            db.execSQL("ALTER TABLE my_table_temp ADD COLUMN " + KEY_RECIPE_TIME + " DOUBLE");
+
+            db.execSQL("DROP TABLE "+TABLE_RECIPE);
+
+            db.execSQL("ALTER TABLE my_table_temp RENAME TO "+TABLE_RECIPE);
+        }
+
+    }
+
+    public SQLiteDatabase getDatabase() {
+        return this.getReadableDatabase();
+    }
 
 
 

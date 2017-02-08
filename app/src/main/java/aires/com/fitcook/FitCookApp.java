@@ -3,12 +3,14 @@ package aires.com.fitcook;
 import android.app.Application;
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDex;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+
 
 import java.util.HashMap;
 
@@ -48,6 +50,13 @@ public class FitCookApp extends Application {
         mapCategory.put(R.id.category_pasta, new Category(R.id.category_pasta, R.drawable.pasta_big, 5, getResources().getString(R.string.category_pasta)));
         mapCategory.put(R.id.category_salad, new Category(R.id.category_salad, R.drawable.salad_big, 8, getResources().getString(R.string.category_salad)));
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+        MultiDex.install(this);
     }
 
     synchronized public Tracker getDefaultTracker() {

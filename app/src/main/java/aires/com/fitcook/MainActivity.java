@@ -1,7 +1,5 @@
 package aires.com.fitcook;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
@@ -107,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     public void setUpActionBar(){
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
+        // setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null) {
