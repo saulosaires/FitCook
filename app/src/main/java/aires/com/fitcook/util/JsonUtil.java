@@ -12,7 +12,7 @@ import aires.com.fitcook.entity.Category;
 import aires.com.fitcook.entity.Recipe;
 
 public class JsonUtil {
-
+/*
     public static Recipe parseRecipe(JSONObject recipeJson) throws JSONException {
 
         Boolean ativo        =recipeJson.getBoolean("ativo");
@@ -92,7 +92,7 @@ public class JsonUtil {
 
         return listRecipe;
     }
-
+*/
     public static List<String> parseList( JSONArray ingredients) throws JSONException {
 
         List<String> listIngredients= new ArrayList<String>();

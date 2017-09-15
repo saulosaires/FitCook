@@ -14,6 +14,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import aires.com.fitcook.entity.Category;
@@ -29,7 +31,7 @@ public class RecipeFirebase {
 
 
         this.userRef = FirebaseDatabase.getInstance().getReference("recipes");
-
+        this.userRef.keepSynced(true);
     }
 
 
@@ -41,7 +43,7 @@ public class RecipeFirebase {
 
     public void read(final CallBack callBack){
 
-        userRef.orderByChild("time").addValueEventListener(new ValueEventListener() {
+        userRef.orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -52,6 +54,17 @@ public class RecipeFirebase {
                     lista.add(postSnapshot.getValue(Recipe.class));
 
                 }
+
+                Collections.sort(lista, new Comparator<Recipe>() {
+                    @Override
+                    public int compare(Recipe recipe1, Recipe recipe2)
+                    {
+
+                        return  (int)(recipe2.getTime()-recipe1.getTime());
+                    }
+                });
+
+
                 callBack.onResponse(lista);
 
             }

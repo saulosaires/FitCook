@@ -1,21 +1,32 @@
 package aires.com.fitcook;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
+import com.google.firebase.database.DatabaseError;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import aires.com.fitcook.dao.RecipeDAO;
+import aires.com.fitcook.dao.RecipeFirebase;
 import aires.com.fitcook.entity.Category;
 import aires.com.fitcook.entity.Recipe;
 import aires.com.fitcook.fragment.EmptyFragment;
@@ -23,29 +34,35 @@ import aires.com.fitcook.fragment.LoadingFragment;
 import aires.com.fitcook.fragment.RecipeFragment;
 import aires.com.fitcook.fragment.SearchDialogFragment;
 import aires.com.fitcook.util.AnalyticsUtil;
+import aires.com.fitcook.util.Migrar;
 import aires.com.fitcook.util.SyncUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String FRAGMENT = "FRAGMENT";
 
-    private static boolean  syncked=false;
-
     private DrawerLayout mDrawerLayout;
     private SyncUtils.CallBack callBack;
 
     private RecipeDAO recipeDAO;
+    private RecipeFirebase recipe2DAO;
 
-
+    private List<Recipe> listRecipe;
+    private List<Recipe> searchRecipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AnalyticsUtil.send(this, "MainActivity");
+        //new Migrar().doMigrar(this);
 
+        AnalyticsUtil.send(this, "MainActivity");
+        searchRecipe=new ArrayList<>();
+
+        recipe2DAO= new RecipeFirebase();
+        recipeDAO = new RecipeDAO(this);
         setUpActionBar();
-        recipeDAO=new RecipeDAO(this);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -53,58 +70,33 @@ public class MainActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
 
 
-        if(!syncked) {
-            sync();
-        }else{
-            handleRecipes(recipeDAO.getAll());
-        }
-
-
+        readAll();
     }
 
+    private void readAll(){
 
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main, menu);
-
-
-        return true;
-    }
-
-
-
-    private  void sync(){
-
-        callBack=new SyncUtils.CallBack() {
+        recipe2DAO.read(new RecipeFirebase.CallBack() {
             @Override
-            public void onStart() {
+            public void onResponse(Object obj) {
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, LoadingFragment.newInstance())
-                        .commit();
-
+                listRecipe= (List<Recipe>) obj;
+                handleRecipes(listRecipe);
             }
 
             @Override
-            public void onFinished(boolean error) {
+            public void onErrorResponse(DatabaseError databaseError) {
 
-                handleRecipes(recipeDAO.getAll());
-                syncked=true;
             }
-        };
-
-        SyncUtils.TriggerRefresh(this, callBack);
+        });
 
     }
+
+
+
 
     public void setUpActionBar(){
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null) {
@@ -132,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
 
                             case R.id.nav_home:
-                                handleRecipes(recipeDAO.getAll());
+                                readAll();
                                 break;
                             case R.id.fav:
                                 handleFavorite();
@@ -141,9 +133,6 @@ public class MainActivity extends AppCompatActivity {
                                 handleShare();
                                 break;
 
-                            default:
-                                handleCategory(menuItem.getItemId());
-                                break;
 
                         }
 
@@ -167,8 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle(getResources().getString(R.string.all_recipes));
 
-
-
         if(listRecipe==null  || listRecipe.size()==0){
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -181,8 +168,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private  void loadingFragment(){
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, LoadingFragment.newInstance())
+                    .commitAllowingStateLoss();
+
+
 
     }
+
 
     public void handleShare(){
 
@@ -200,7 +197,8 @@ public class MainActivity extends AppCompatActivity {
     public void handleFavorite(){
 
 
-        List<Recipe> listRecipe = recipeDAO.readFav();
+        final List<Recipe> listRecipe =recipeDAO.getAll();
+
 
         if(listRecipe==null  || listRecipe.size()==0){
 
@@ -216,43 +214,66 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void handleCategory(int categoryId){
-
-        Category cat =FitCookApp.mapCategory.get(categoryId);
-
-        List<Recipe> listRecipe = recipeDAO.readByCategory(cat);
-
-        if(listRecipe==null  || listRecipe.size()==0){
-
-            String empty= getResources().getString(R.string.empty_category);
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.container, EmptyFragment.newInstance(cat.getIcon(),empty))
-                    .commit();
-
-        }else{
-
-            showRecipeFragment(listRecipe);
-
-        }
-
-    }
 
     private void showRecipeFragment(List<Recipe> listRecipe){
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        RecipeFragment recipeFragment = (RecipeFragment) fragmentManager.findFragmentByTag(FRAGMENT);
-
-        if(recipeFragment!=null){
-            recipeFragment.init(listRecipe);
-            recipeFragment.update();
-            fragmentManager.beginTransaction().show(recipeFragment).commit();
-        }else{
-            fragmentManager.beginTransaction().replace(R.id.container, RecipeFragment.newInstance((listRecipe)),FRAGMENT)
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, RecipeFragment.newInstance((listRecipe)),FRAGMENT)
                     .commit();
-        }
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =(SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =(SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                if(listRecipe==null)return false;
+
+                searchRecipe.clear();
+
+                for(Recipe r: listRecipe){
+
+                    if(r.getName().toLowerCase().contains(s.toLowerCase())){
+                        searchRecipe.add(r);
+                    }
+
+                }
+
+                handleRecipes(searchRecipe);
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                handleRecipes(listRecipe);
+                return false;
+            }
+        });
+
+
+        return true;
     }
 
     @Override
@@ -262,18 +283,6 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
 
-            case R.id.search:{
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-                SearchDialogFragment groupDialogFragment = SearchDialogFragment.newInstance();
-                groupDialogFragment.show(ft,"dialog");
-                return true;
-            }
         }
 
         return super.onOptionsItemSelected(item);

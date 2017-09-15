@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.pm.ActivityInfoCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -30,12 +29,12 @@ import aires.com.fitcook.entity.Recipe;
  * Created by Saulo Aires on 10/07/2017.
  */
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
+public class RecipeFullAdapter extends RecyclerView.Adapter<RecipeFullAdapter.ViewHolder> {
 
     private List<Recipe> listRecipe;
     private Activity activity;
 
-    public RecipeAdapter(List<Recipe> listRecipe,Activity activity) {
+    public RecipeFullAdapter(List<Recipe> listRecipe, Activity activity) {
         super();
         this.listRecipe=listRecipe;
         this.activity=activity;
@@ -45,7 +44,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.catalog_card, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.catalog_full_card, viewGroup, false);
 
         return new ViewHolder(v,viewGroup.getContext());
     }
@@ -68,10 +67,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                         Palette.Swatch swatch = palette.getVibrantSwatch();
 
                         if (swatch != null) {
-                            viewHolder.warpper.setBackgroundColor(swatch.getRgb());
+                           // viewHolder.warpper.setBackgroundColor(swatch.getRgb());
 
                             //viewHolder.title.setBackgroundColor(swatch.getRgb());
-                            viewHolder.title.setTextColor(swatch.getTitleTextColor());
+                            viewHolder.title.setTextColor(swatch.getRgb());
 
 
                         }
@@ -118,6 +117,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
+        
+         if(listRecipe==null) return 0;
         return listRecipe.size();
     }
 

@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.HashMap;
@@ -25,7 +26,6 @@ public class FitCookApp extends Application {
 
     public static final String CONTENT_AUTHORITY = "aires.com.fitcook";
 
-    public static HashMap<Integer,Category> mapCategory = new HashMap<Integer,Category>();
 
     private Tracker mTracker;
 
@@ -42,13 +42,8 @@ public class FitCookApp extends Application {
         super.onCreate();
         mInstance = this;
 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
-        mapCategory.put(R.id.category_drink, new Category(R.id.category_drink, R.drawable.drink_big, 0, getResources().getString(R.string.category_drink)));
-        mapCategory.put(R.id.category_cake,  new Category(R.id.category_cake,  R.drawable.cake_big,  1, getResources().getString(R.string.category_cake)));
-        mapCategory.put(R.id.category_meat,  new Category(R.id.category_meat,  R.drawable.meat_big,  2, getResources().getString(R.string.category_meat)));
-        mapCategory.put(R.id.category_snacks,new Category(R.id.category_snacks,R.drawable.snacks_big,4, getResources().getString(R.string.category_snack)));
-        mapCategory.put(R.id.category_pasta, new Category(R.id.category_pasta, R.drawable.pasta_big, 5, getResources().getString(R.string.category_pasta)));
-        mapCategory.put(R.id.category_salad, new Category(R.id.category_salad, R.drawable.salad_big, 8, getResources().getString(R.string.category_salad)));
 
     }
 

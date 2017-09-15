@@ -7,88 +7,35 @@ import aires.com.fitcook.FitCookApp;
 import aires.com.fitcook.dao.DatabaseHelper;
 import aires.com.fitcook.util.BitWiseUtil;
 
-public class Recipe  extends Entity{
+public class Recipe  extends Entity {
 
     private String publicId;
     private String name;
     private String url;
-    private String urlSmall;
-    private String urlMedium;
     private String description;
     private String timeToPrepare;
     private String servings;
-    private Boolean favorite;
     private int category;
     private String ingredients;
     private String instruction;
-    private Boolean ativo;
     private double time;
 
-    public Recipe(String publicId,
-                  String name,
-                  String url,
-                  String description,
-                  String timeToPrepare,
-                  String servings,
-                  Boolean favorite,
-                  int category,
-                  String ingredients,
-                  String instruction) {
+    private Boolean favorite;
 
+    public Recipe() {
+    }
+
+    public Recipe(String publicId, String name, String url, String description, String timeToPrepare, String servings, int category, String ingredients, String instruction) {
         this.publicId = publicId;
         this.name = name;
         this.url = url;
         this.description = description;
         this.timeToPrepare = timeToPrepare;
         this.servings = servings;
-        this.favorite = favorite;
-        this.category=category;
-        this.ingredients=ingredients;
-        this.instruction=instruction;
+        this.category = category;
+        this.ingredients = ingredients;
+        this.instruction = instruction;
 
-    }
-
-    public Recipe(String publicId,
-                  String name,
-                  String url,
-                  String description,
-                  String timeToPrepare,
-                  String servings,
-                  Boolean favorite,
-                  int category,
-                  String ingredients,
-                  String instruction,
-                  Boolean ativo,
-                  double time) {
-
-        this.publicId = publicId;
-        this.name = name;
-        this.url = url;
-        this.urlSmall  =url.replace("upload/","upload/c_scale,h_200/f_auto/");
-
-        this.description = description;
-        this.timeToPrepare = timeToPrepare;
-        this.servings = servings;
-        this.favorite = favorite;
-        this.category=category;
-        this.ingredients=ingredients;
-        this.instruction=instruction;
-        this.ativo=ativo;
-        this.time=time;
-
-    }
-
-    public String getUrlMedium(){
-
-        return url.replace("upload/","upload/c_scale,h_400/f_auto/");
-    }
-
-    public String getUrlSmall() {
-        return urlSmall;
-    }
-
-    public void setUrlSmall(String urlSmall) {
-        this.urlSmall = urlSmall;
     }
 
     public int getCategory() {
@@ -147,14 +94,6 @@ public class Recipe  extends Entity{
         this.servings = servings;
     }
 
-    public Boolean getFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(Boolean favorite) {
-        this.favorite = favorite;
-    }
-
     public String getIngredients() {
         return ingredients;
     }
@@ -171,20 +110,20 @@ public class Recipe  extends Entity{
         this.instruction = instruction;
     }
 
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
-    }
-
     public double getTime() {
         return time;
     }
 
     public void setTime(double time) {
         this.time = time;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 
     public ContentValues toContentValues(){
@@ -199,11 +138,11 @@ public class Recipe  extends Entity{
         values.put(DatabaseHelper.KEY_RECIPE_SERVINGS, servings);
         values.put(DatabaseHelper.KEY_RECIPE_INST, instruction);
         values.put(DatabaseHelper.KEY_RECIPE_INGR, ingredients);
-        values.put(DatabaseHelper.KEY_RECIPE_FAV, favorite?1:0);
         values.put(DatabaseHelper.KEY_RECIPE_CAT, category);
-        values.put(DatabaseHelper.KEY_RECIPE_TIME, time);
+
         return values;
 
 
     }
+
 }

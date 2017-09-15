@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "FITCOOK_DB.db";
@@ -21,11 +21,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_RECIPE_DESCRIPTION = "description";
     public static final String KEY_RECIPE_TIME_TO_PREPARE = "timeToPrepare";
     public static final String KEY_RECIPE_SERVINGS = "servings";
-    public static final String KEY_RECIPE_FAV = "fav";
     public static final String KEY_RECIPE_CAT = "category";
     public static final String KEY_RECIPE_INST = "instruction";
     public static final String KEY_RECIPE_INGR = "ingredient";
-    public static final String KEY_RECIPE_TIME    = "time";
 
     private static final String CREATE_TABLE_RECIPE = "CREATE TABLE "+ TABLE_RECIPE+"("+
             KEY_RECIPE_PUBLICID+" VARCHAR(100),  "+
@@ -36,9 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KEY_RECIPE_SERVINGS+" VARCHAR(50),"+
             KEY_RECIPE_INST+" VARCHAR(4000),"+
             KEY_RECIPE_INGR+" VARCHAR(4000),"+
-            KEY_RECIPE_CAT+" INTEGER,"+
-            KEY_RECIPE_TIME + " DOUBLE,"+
-            KEY_RECIPE_FAV+" INTEGER)";
+            KEY_RECIPE_CAT+" INTEGER)";
 
 
 
@@ -58,26 +54,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 3) {
+        if (oldVersion < 5) {
 
-            db.execSQL("CREATE TABLE my_table_temp as  SELECT "+
-                    KEY_RECIPE_PUBLICID+" , " +
-                    KEY_RECIPE_NAME+" , " +
-                    KEY_RECIPE_URL+" , " +
-                    KEY_RECIPE_DESCRIPTION+" , " +
-                    KEY_RECIPE_TIME_TO_PREPARE+" , " +
-                    KEY_RECIPE_SERVINGS+" , " +
-                    KEY_RECIPE_INST+" , " +
-                    KEY_RECIPE_INGR+" , " +
-                    KEY_RECIPE_CAT+" , " +
-                    KEY_RECIPE_FAV+
-                    " FROM "+TABLE_RECIPE+" ");
+            db.execSQL("DROP TABLE  if exists "+TABLE_RECIPE);
 
-            db.execSQL("ALTER TABLE my_table_temp ADD COLUMN " + KEY_RECIPE_TIME + " DOUBLE");
+            db.execSQL(CREATE_TABLE_RECIPE);
 
-            db.execSQL("DROP TABLE "+TABLE_RECIPE);
-
-            db.execSQL("ALTER TABLE my_table_temp RENAME TO "+TABLE_RECIPE);
         }
 
     }

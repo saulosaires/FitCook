@@ -1,9 +1,6 @@
 package aires.com.fitcook;
 
 
-import android.animation.ObjectAnimator;
-import android.animation.TimeInterpolator;
-import android.app.Activity;
 import android.content.Intent;
 
 
@@ -17,14 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.DatabaseError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +28,7 @@ import java.util.List;
 
 
 import aires.com.fitcook.dao.RecipeDAO;
+import aires.com.fitcook.dao.RecipeFirebase;
 import aires.com.fitcook.entity.Recipe;
 import aires.com.fitcook.util.AnalyticsUtil;
 import aires.com.fitcook.util.JsonUtil;
@@ -40,8 +36,8 @@ import aires.com.fitcook.util.JsonUtil;
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     public static final String EXTRA_RECIPE_ID = "EXTRA_RECIPE_ID";
+    RecipeFirebase recipeFirebase;
     RecipeDAO recipeDAO;
-
     Recipe recipe;
 
     @Override
@@ -51,24 +47,42 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         AnalyticsUtil.send(this, "RecipeDetailsActivity");
 
-        recipeDAO= new RecipeDAO(getApplicationContext());
-
+        recipeFirebase = new RecipeFirebase();
+        recipeDAO = new RecipeDAO(this);
         Intent intent = getIntent();
         final String id = intent.getStringExtra(EXTRA_RECIPE_ID);
 
-        recipe= recipeDAO.read(id);
+        recipeFirebase.read(id, new RecipeFirebase.CallBack() {
+            @Override
+            public void onResponse(Object obj) {
+
+                recipe= (Recipe) obj;
+
+                Recipe r= recipeDAO.read(recipe.getPublicId());
+
+                recipe.setFavorite(!(r==null));
+
+                CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+                collapsingToolbar.setTitle(recipe.getName());
+                collapsingToolbar.setExpandedTitleTextAppearance(R.style.expandedappbar);
+
+                loadBackdrop();
+
+                init();
+
+            }
+
+            @Override
+            public void onErrorResponse(DatabaseError databaseError) {
+
+            }
+        });
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(recipe.getName());
-        collapsingToolbar.setExpandedTitleTextAppearance(R.style.expandedappbar);
 
-        loadBackdrop();
-
-        init();
 
     }
 
@@ -78,7 +92,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
 
-        PicassoCache.getPicassoInstance(this).load(recipe.getUrlMedium()).into(imageView);
+        PicassoCache.getPicassoInstance(this).load(recipe.getUrl()).into(imageView);
 
         final FloatingActionButton fab =(FloatingActionButton)findViewById(R.id.fab);
 
@@ -93,15 +107,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (recipe.getFavorite()) {
+
+                    recipeDAO.delete(recipe.getPublicId());
                     fab.setImageResource(R.drawable.ic_favorite_border_white_48dp);
                 } else {
+
+                    recipeDAO.merge(recipe);
                     fab.setImageResource(R.drawable.ic_favorite_white_48dp);
 
                 }
 
-                recipe.setFavorite(!recipe.getFavorite());
-
-                recipeDAO.update(recipe);
 
             }
         });

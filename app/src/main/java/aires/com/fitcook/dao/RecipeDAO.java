@@ -30,18 +30,13 @@ public class RecipeDAO {
 		String description   = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_DESCRIPTION));
 		String timeToPrepare = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_TIME_TO_PREPARE));
 		String servings      = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_SERVINGS));
-		Integer fav          = c.getInt(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_FAV));
         Integer category     = c.getInt(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_CAT));
 		String instructions  = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_INST));
 		String ingredients   = c.getString(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_INGR));
-		double time          = c.getDouble(c.getColumnIndex(DatabaseHelper.KEY_RECIPE_TIME));
-
-		Boolean favorite=false;
-
-		if(fav!=null && fav.intValue()==1)favorite=true;
 
 
-		return new Recipe(id, name,url,description,timeToPrepare,servings,favorite,category,ingredients,instructions,true,time);
+
+		return new Recipe(id, name,url,description,timeToPrepare,servings,category,ingredients,instructions);
 
 	}
 
@@ -95,37 +90,8 @@ public class RecipeDAO {
 
   }
 
-  public List<Recipe> search(String name){
 
-		SQLiteDatabase db = helper.getDatabase();
-
-		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE + " WHERE "
-				+ DatabaseHelper.KEY_RECIPE_NAME + " like '%" + name+"%'  order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";;
-
-		Cursor c = db.rawQuery(selectQuery, null);
-
-		if (c != null)
-			c.moveToFirst();
-
-		if(c.getCount()==0)return null;
-
-	    List<Recipe> listRecipe = new ArrayList<Recipe>();
-
-	    while (!c.isAfterLast()) {
-
-		  listRecipe.add(	fromCursor(c));
-		  c.moveToNext();
-	    }
-
-	    c.close();
-
-	  return listRecipe;
-
-
-  }
-
-
-	public boolean update(Recipe recipe){
+  public boolean update(Recipe recipe){
 
 	  SQLiteDatabase db = helper.getDatabase();
 
@@ -150,7 +116,7 @@ public class RecipeDAO {
 
 		SQLiteDatabase db = helper.getDatabase();
 
-		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE+" order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";
+		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE+" order by "+DatabaseHelper.KEY_RECIPE_NAME+" DESC";
 
 		Cursor c = db.rawQuery(selectQuery,  new String[] {});
 
@@ -172,61 +138,6 @@ public class RecipeDAO {
 		return listRecipe;
   }
 
-	public List<Recipe> readFav(){
-
-		SQLiteDatabase db = helper.getDatabase();
-
-		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE + " WHERE "
-				+ DatabaseHelper.KEY_RECIPE_FAV + "=1  order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";;
-
-		Cursor c = db.rawQuery(selectQuery,  new String[] {});
-
-		if (c != null)
-			c.moveToFirst();
-
-		if (c.getCount() == 0)
-			return null;
-
-		List<Recipe> listRecipe = new ArrayList<Recipe>();
-
-		while (!c.isAfterLast()) {
-
-			listRecipe.add(fromCursor(c));
-			c.moveToNext();
-		}
-		c.close();
-
-		return listRecipe;
-	}
-
-	public List<Recipe> readByCategory(Category category){
-
-		double value=Math.pow(2, category.getBitPosition());
-
-		SQLiteDatabase db = helper.getDatabase();
-
-		String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_RECIPE + " WHERE "
-				+ "("+DatabaseHelper.KEY_RECIPE_CAT + "&"+value+")="+value+" order by "+DatabaseHelper.KEY_RECIPE_TIME+" DESC";;
-
-		Cursor c = db.rawQuery(selectQuery,  new String[] {});
-
-		if (c != null)
-			c.moveToFirst();
-
-		if (c.getCount() == 0)
-			return null;
-
-		List<Recipe> listRecipe = new ArrayList<Recipe>();
-
-		while (!c.isAfterLast()) {
-
-			listRecipe.add(fromCursor(c));
-			c.moveToNext();
-		}
-		c.close();
-
-		return listRecipe;
-	}
 
 
 }

@@ -47,7 +47,7 @@ public class SyncUtils {
 
         @Override
         protected List<Recipe> doInBackground(Void... params) {
-
+/*
             WebService.CallBack wsCallBack =new WebService.CallBack() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -103,7 +103,7 @@ public class SyncUtils {
 
             FitCookApp.cancelAllRequests(WebService.retrieve);
             WebService.retrieveRecipes(FitCookApp.getSharedPreferencesValue(context,FitCookApp.TIME,0),wsCallBack);
-
+*/
             return null;
         }
 
